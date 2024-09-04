@@ -6,6 +6,7 @@ import web from "./web.png";
 import github from "./github.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
+import logo2 from "./iconwhite.png";
 
 import css from "./tech/css.png";
 import docker from "./tech/docker.png";
@@ -31,9 +32,13 @@ import fid from "./company/fid.jpg";
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
+import ipractica from "./ipractica.png";
+import ecommerce from "./ecommers.webp";
+import krapygames from "./KrapyGames.webp";
 
 export {
   logo,
+  logo2,
   backend,
   creator,
   mobile,
@@ -63,4 +68,7 @@ export {
   tripguide,
   udla,
   fid,
+  ipractica,
+  ecommerce,
+  krapygames
 };

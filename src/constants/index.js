@@ -25,6 +25,9 @@ import {
   threejs,
   udla,
   fid,
+  ipractica,
+  ecommerce,
+  krapygames,
 } from "../assets";
 
 export const navLinks = [
@@ -148,94 +151,95 @@ const experiences = [
 const testimonials = [
   {
     testimonial:
-      "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-    name: "Sara Lee",
-    designation: "CFO",
-    company: "Acme Co",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+      "Trabajar con Daniel fue una experiencia excepcional. Su habilidad para transformar nuestras ideas en una plataforma funcional y atractiva superó todas nuestras expectativas.",
+    name: "Juan Pérez",
+    designation: "CEO",
+    company: "Tech Innovators",
+    image: "https://randomuser.me/api/portraits/men/10.jpg",
   },
   {
     testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
-    name: "Chris Brown",
-    designation: "COO",
-    company: "DEF Corp",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
+      "Daniel no solo creó una página web increíble para nosotros, sino que también nos ayudó a entender mejor nuestras necesidades tecnológicas. Su compromiso con el éxito del proyecto fue inspirador.",
+    name: "María González",
+    designation: "Directora de Marketing",
+    company: "Market Solutions",
+    image: "https://randomuser.me/api/portraits/women/8.jpg",
   },
   {
     testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: "Lisa Wang",
-    designation: "CTO",
-    company: "456 Enterprises",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
+      "Gracias a Daniel, nuestro sitio de e-commerce ahora es rápido, eficiente y fácil de usar. Las ventas han aumentado un 40% desde que implementamos sus mejoras.",
+    name: "Carlos Ramírez",
+    designation: "Gerente de Ventas",
+    company: "Online Retailers",
+    image: "https://randomuser.me/api/portraits/men/12.jpg",
   },
 ];
 
 const projects = [
   {
-    name: "Car Rent",
+    name: "Plataforma de Gestión de Prácticas",
     description:
-      "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
+      "Desarrollé y diseñé una plataforma web que gestiona las prácticas profesionales de la Facultad de Ingeniería de la Universidad de las Américas. La plataforma facilita la administración de estudiantes y profesores, brindando un sistema automatizado que soporta las necesidades de más de 10,000 estudiantes y 500 profesores.",
     tags: [
       {
         name: "react",
         color: "blue-text-gradient",
-      },
-      {
-        name: "mongodb",
-        color: "green-text-gradient",
       },
       {
         name: "tailwind",
         color: "pink-text-gradient",
       },
-    ],
-    image: carrent,
-    source_code_link: "https://github.com/",
-  },
-  {
-    name: "Job IT",
-    description:
-      "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
-    tags: [
       {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "restapi",
+        name: "mongodb",
         color: "green-text-gradient",
       },
-      {
-        name: "scss",
-        color: "pink-text-gradient",
-      },
     ],
-    image: jobit,
+    image: ipractica,
     source_code_link: "https://github.com/",
   },
   {
-    name: "Trip Guide",
+    name: "Comparador de Precios de Juegos",
     description:
-      "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
+      "Desarrollé una página web para comparar precios de tiendas de juegos digitales en Chile. Trabajé principalmente en el frontend para conectar las rutas del backend y ofrecer una interfaz responsiva que facilita la búsqueda y comparación de precios en tiempo real.",
     tags: [
       {
         name: "nextjs",
         color: "blue-text-gradient",
       },
       {
-        name: "supabase",
-        color: "green-text-gradient",
-      },
-      {
-        name: "css",
+        name: "tailwind",
         color: "pink-text-gradient",
       },
+      {
+        name: "nodejs",
+        color: "green-text-gradient",
+      },
     ],
-    image: tripguide,
+    image: krapygames,
     source_code_link: "https://github.com/",
   },
+  {
+    name: "E-Commerce Store",
+    description:
+      "Plataforma de comercio electrónico que permite a los usuarios navegar por productos, agregar artículos al carrito y realizar compras de manera segura. Incluye un sistema de gestión de inventario para los vendedores y opciones de pago integradas para los compradores.",
+    tags: [
+      {
+        name: "react",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "redux",
+        color: "purple-text-gradient",
+      },
+      {
+        name: "nodejs",
+        color: "green-text-gradient",
+      },
+    ],
+    image: ecommerce,
+    source_code_link: "https://github.com/",
+  }
 ];
+
 
 export { services, technologies, experiences, testimonials, projects };

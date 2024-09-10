@@ -195,7 +195,8 @@ const projects = [
       },
     ],
     image: ipractica,
-    source_code_link: "https://github.com/",
+    source_code_link: "https://github.com/DanielGallegosLB/19-Frontend",
+    page_link: "https://19-frontend.vercel.app/",
   },
   {
     name: "Comparador de Precios de Juegos",
@@ -216,7 +217,7 @@ const projects = [
       },
     ],
     image: krapygames,
-    source_code_link: "https://github.com/",
+    
   },
   {
     name: "E-Commerce Store",
@@ -237,7 +238,6 @@ const projects = [
       },
     ],
     image: ecommerce,
-    source_code_link: "https://github.com/",
   }
 ];
 

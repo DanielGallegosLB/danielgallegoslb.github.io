@@ -195,7 +195,7 @@ const projects = [
       },
     ],
     image: ipractica,
-    source_code_link: "https://github.com/DanielGallegosLB/19-Frontend",
+    source_code_link: "https://github.com/DanielGallegosLB/19-Frontend-source",
     page_link: "https://19-frontend.vercel.app/",
   },
   {

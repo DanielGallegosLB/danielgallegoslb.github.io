@@ -137,7 +137,7 @@ const experiences = [
     company_name: "FID Chile Seguros Generales S.A.",
     icon: fid,
     iconBg: "#E6DEDD",
-    date: "Enero 2024 - Abril 2024",
+    date: "Enero 2023 - Abril 2024",
     points: [
       "Contribuí con 5 GB de datos sobre potenciales clientes y riesgos relacionados con pólizas de automóviles.",
       "Implementé ejecuciones escalables y automatizadas de extractores utilizando Google Cloud Platform, Docker y Selenium.",

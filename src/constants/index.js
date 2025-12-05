@@ -28,6 +28,7 @@ import {
   ipractica,
   ecommerce,
   krapygames,
+  whalecloud
 } from "../assets";
 
 export const navLinks = [
@@ -144,7 +145,18 @@ const experiences = [
       "Elaboré documentación completa para los proyectos."
     ],
   },
-  
+  {
+    title: "Integration-Delivery Engineer",
+    company_name: "Whale Cloud Technology Co., Ltd",
+    icon: whalecloud,
+    iconBg: "#E6DEDD",
+    date: "Enero 2025 - Diciembre 2025",
+    points: [
+      "Colaboré con la entrega de 3 MVP (Productos Mínimos Viables) a tiempo, abarcando un promedio de 700 casos de uso.",
+      "Desarrollé mini-apps, extensiones y scripts para facilitar procesos y obtener datos significativos, asegurando la finalización de las integraciones a tiempo y con calidad.",
+      "Documenté y compartí todos los flujos e información obtenida para garantizar la transferencia de conocimiento."
+    ]
+  }
 ];
 
 

@@ -29,6 +29,7 @@ import starbucks from "./company/starbucks.png";
 import tesla from "./company/tesla.png";
 import udla from "./company/udla.png";
 import fid from "./company/fid.jpg";
+import whalecloud from "./company/whalecloud.jpg";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -72,5 +73,6 @@ export {
   fid,
   ipractica,
   ecommerce,
-  krapygames
+  krapygames,
+  whalecloud
 };

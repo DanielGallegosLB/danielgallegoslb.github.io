@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -8,9 +8,12 @@ import { motion } from "framer-motion";
 import "react-vertical-timeline-component/style.min.css";
 
 import { styles } from "../styles";
-import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
+import { usePortfolio } from "../context/PortfolioContext";
+import { getAsset } from "../utils/assetMapper";
+import EditableText from "./EditableText";
+import { ExperienceEditorModal } from "./ModalEditors";
 
 const ExperienceCard = ({ experience }) => {
   return (
@@ -25,7 +28,7 @@ const ExperienceCard = ({ experience }) => {
       icon={
         <div className='flex justify-center items-center w-full h-full'>
           <img
-            src={experience.icon}
+            src={getAsset(experience.icon)}
             alt={experience.company_name}
             className='w-[60%] h-[60%] object-contain'
           />
@@ -57,16 +60,40 @@ const ExperienceCard = ({ experience }) => {
 };
 
 const Experience = () => {
+  const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { experiences } = portfolioData;
+
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText} text-center`}>
-        Mi recorrido profesional hasta ahora
-        </p>
-        <h2 className={`${styles.sectionHeadText} text-center`}>
-          Experiencia Laboral
-        </h2>
+        <div className="flex flex-col text-center">
+          <EditableText
+            value={portfolioData.about.expSub || "Mi recorrido profesional hasta ahora"}
+            onChange={(val) => updateText("about.expSub", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionSubText}
+          />
+          <EditableText
+            value={portfolioData.about.expTitle || "Experiencia Laboral"}
+            onChange={(val) => updateText("about.expTitle", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionHeadText}
+          />
+        </div>
       </motion.div>
+
+      {isAdminMode && (
+        <div className="flex justify-center mt-4 mb-8">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white font-bold py-2 px-4 rounded-xl cursor-pointer transition-colors shadow-lg"
+          >
+            🛠️ Gestionar Experiencias
+          </button>
+        </div>
+      )}
 
       <div className='mt-20 flex flex-col'>
         <VerticalTimeline>
@@ -78,6 +105,13 @@ const Experience = () => {
           ))}
         </VerticalTimeline>
       </div>
+
+      <ExperienceEditorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={experiences}
+        onSave={(updatedExp) => updateField("experiences", updatedExp)}
+      />
     </>
   );
 };

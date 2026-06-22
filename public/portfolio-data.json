@@ -1,0 +1,207 @@
+{
+  "hero": {
+    "name": "Daniel",
+    "subtitle": "Desarrollo aplicaciones web completas,\nincluyendo interfaces de usuario, APIs y bases de datos."
+  },
+  "about": {
+    "sub": "Introducción edit",
+    "title": "Resumen. edit",
+    "description": "Soy un desarrollador de software cualificado con experiencia en tecnologías full-stack. Disfruto colaborar estrechamente con clientes y equipos para enfrentar desafíos emergentes, utilizando buenas prácticas y tecnologías adecuadas a cada necesidad. Me especializo en crear soluciones eficientes, escalables y amigables con el usuario en entornos reales. edit",
+    "expSub": "Mi recorrido profesional hasta ahora edit",
+    "expTitle": "Experiencia Laboral edit"
+  },
+  "services": [
+    {
+      "title": "Desarrollador Web Full-Stack",
+      "icon": "/src/assets/web.png"
+    },
+    {
+      "title": "Arquitecto de Software",
+      "icon": "/src/assets/mobile.png"
+    },
+    {
+      "title": "Ingeniero DevOps",
+      "icon": "/src/assets/backend.png"
+    },
+    {
+      "title": "Desarrollador de API",
+      "icon": "/src/assets/creator.png"
+    }
+  ],
+  "experiences": [
+    {
+      "title": "Full-stack Software Developer",
+      "company_name": "Núcleo de Investigación de Data Science (NIDS)",
+      "icon": "/src/assets/company/udla.png",
+      "iconBg": "#E6DEDD",
+      "date": "Enero 2023 - Marzo 2023",
+      "points": [
+        "Generación de aplicación para solicitar datos de contribuyentes al SII.",
+        "Desarrollo de página para cálculo de impuestos utilizando Javascript, HTML y CSS.",
+        "Documentación completa del proyecto."
+      ]
+    },
+    {
+      "title": "Data Engineer",
+      "company_name": "FID Chile Seguros Generales S.A.",
+      "icon": "/src/assets/company/fid.jpg",
+      "iconBg": "#E6DEDD",
+      "date": "Enero 2023 - Abril 2024",
+      "points": [
+        "Contribuí con 5 GB de datos sobre potenciales clientes y riesgos relacionados con pólizas de automóviles.",
+        "Implementé ejecuciones escalables y automatizadas de extractores utilizando Google Cloud Platform, Docker y Selenium.",
+        "Elaboré documentación completa para los proyectos."
+      ]
+    },
+    {
+      "title": "Integration-Delivery Engineer",
+      "company_name": "Whale Cloud Technology Co., Ltd",
+      "icon": "/src/assets/company/whalecloud.jpg",
+      "iconBg": "#E6DEDD",
+      "date": "Enero 2025 - Diciembre 2025",
+      "points": [
+        "Colaboré con la entrega de 3 MVP (Productos Mínimos Viables) a tiempo, abarcando un promedio de 700 casos de uso.",
+        "Desarrollé mini-apps, extensiones y scripts para facilitar procesos y obtener datos significativos, asegurando la finalización de las integraciones a tiempo y con calidad.",
+        "Documenté y compartí todos los flujos e información obtenida para garantizar la transferencia de conocimiento."
+      ]
+    }
+  ],
+  "technologies": [
+    {
+      "name": "HTML 5",
+      "icon": "/src/assets/tech/html.png"
+    },
+    {
+      "name": "CSS 3",
+      "icon": "/src/assets/tech/css.png"
+    },
+    {
+      "name": "JavaScript",
+      "icon": "/src/assets/tech/javascript.png"
+    },
+    {
+      "name": "TypeScript",
+      "icon": "/src/assets/tech/typescript.png"
+    },
+    {
+      "name": "React JS",
+      "icon": "/src/assets/tech/reactjs.png"
+    },
+    {
+      "name": "Redux Toolkit",
+      "icon": "/src/assets/tech/redux.png"
+    },
+    {
+      "name": "Tailwind CSS",
+      "icon": "/src/assets/tech/tailwind.png"
+    },
+    {
+      "name": "Node JS",
+      "icon": "/src/assets/tech/nodejs.png"
+    },
+    {
+      "name": "MongoDB",
+      "icon": "/src/assets/tech/mongodb.png"
+    },
+    {
+      "name": "Three JS",
+      "icon": "/src/assets/tech/threejs.png"
+    },
+    {
+      "name": "git",
+      "icon": "/src/assets/tech/git.png"
+    },
+    {
+      "name": "figma",
+      "icon": "/src/assets/tech/figma.png"
+    },
+    {
+      "name": "docker",
+      "icon": "/src/assets/tech/docker.png"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Plataforma de Gestión de Prácticas",
+      "description": "Desarrollé y diseñé una plataforma web que gestiona las prácticas profesionales de la Facultad de Ingeniería de la Universidad de las Américas. La plataforma facilita la administración de estudiantes y profesores, brindando un sistema automatizado que soporta las necesidades de más de 10,000 estudiantes y 500 profesores.",
+      "tags": [
+        {
+          "name": "react",
+          "color": "blue-text-gradient"
+        },
+        {
+          "name": "tailwind",
+          "color": "pink-text-gradient"
+        },
+        {
+          "name": "mongodb",
+          "color": "green-text-gradient"
+        }
+      ],
+      "image": "/src/assets/ipractica.png",
+      "source_code_link": "https://github.com/DanielGallegosLB/19-Frontend-source",
+      "page_link": "https://19-frontend.vercel.app/"
+    },
+    {
+      "name": "Comparador de Precios de Juegos",
+      "description": "Desarrollé una página web para comparar precios de tiendas de juegos digitales en Chile. Trabajé principalmente en el frontend para conectar las rutas del backend y ofrecer una interfaz responsiva que facilita la búsqueda y comparación de precios en tiempo real.",
+      "tags": [
+        {
+          "name": "nextjs",
+          "color": "blue-text-gradient"
+        },
+        {
+          "name": "tailwind",
+          "color": "pink-text-gradient"
+        },
+        {
+          "name": "nodejs",
+          "color": "green-text-gradient"
+        }
+      ],
+      "image": "/src/assets/KrapyGames.webp"
+    },
+    {
+      "name": "E-Commerce Store",
+      "description": "Plataforma de comercio electrónico que permite a los usuarios navegar por productos, agregar artículos al carrito y realizar compras de manera segura. Incluye un sistema de gestión de inventario para los vendedores y opciones de pago integradas para los compradores.",
+      "tags": [
+        {
+          "name": "react",
+          "color": "blue-text-gradient"
+        },
+        {
+          "name": "redux",
+          "color": "purple-text-gradient"
+        },
+        {
+          "name": "nodejs",
+          "color": "green-text-gradient"
+        }
+      ],
+      "image": "/src/assets/ecommers.webp"
+    }
+  ],
+  "testimonials": [
+    {
+      "testimonial": "Trabajar con Daniel fue una experiencia excepcional. Su habilidad para transformar nuestras ideas en una plataforma funcional y atractiva superó todas nuestras expectativas.",
+      "name": "Juan Pérez",
+      "designation": "CEO",
+      "company": "Tech Innovators",
+      "image": "https://randomuser.me/api/portraits/men/10.jpg"
+    },
+    {
+      "testimonial": "Daniel no solo creó una página web increíble para nosotros, sino que también nos ayudó a entender mejor nuestras necesidades tecnológicas. Su compromiso con el éxito del proyecto fue inspirador.",
+      "name": "María González",
+      "designation": "Directora de Marketing",
+      "company": "Market Solutions",
+      "image": "https://randomuser.me/api/portraits/women/8.jpg"
+    },
+    {
+      "testimonial": "Gracias a Daniel, nuestro sitio de e-commerce ahora es rápido, eficiente y fácil de usar. Las ventas han aumentado un 40% desde que implementamos sus mejoras.",
+      "name": "Carlos Ramírez",
+      "designation": "Gerente de Ventas",
+      "company": "Online Retailers",
+      "image": "https://randomuser.me/api/portraits/men/12.jpg"
+    }
+  ]
+}

@@ -3,7 +3,12 @@ import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { ComputersCanvas } from "./canvas";
 
+import { usePortfolio } from "../context/PortfolioContext";
+import EditableText from "./EditableText";
+
 const Hero = () => {
+  const { portfolioData, isAdminMode, updateText } = usePortfolio();
+
   return (
     <section className={`relative w-full h-screen mx-auto`}>
       <div
@@ -14,14 +19,26 @@ const Hero = () => {
           <div className='w-1 sm:h-80 h-40 violet-gradient' />
         </div>
 
-        <div>
-          <h1 className={`${styles.heroHeadText} text-white`}>
-           Hola, Soy <span className='text-[#915EFF]'>Daniel</span>
+        <div className="w-full">
+          <h1 className={`${styles.heroHeadText} text-white flex flex-wrap items-center gap-x-2`}>
+            <span>Hola, Soy</span>
+            <EditableText
+              value={portfolioData.hero.name}
+              onChange={(val) => updateText("hero.name", val)}
+              isAdminMode={isAdminMode}
+              className="text-[#915EFF] font-bold"
+              style={{ display: "inline-block", width: isAdminMode ? "200px" : "auto" }}
+            />
           </h1>
-          <p className={`${styles.heroSubText} mt-2 text-white-100`}>
-            Desarrollo aplicaciones web completas,  <br className='sm:block hidden' />
-            incluyendo interfaces de usuario, APIs y bases de datos.
-          </p>
+          <div className="mt-2 w-full max-w-xl">
+            <EditableText
+              value={portfolioData.hero.subtitle}
+              onChange={(val) => updateText("hero.subtitle", val)}
+              isAdminMode={isAdminMode}
+              type="textarea"
+              className={`${styles.heroSubText} text-white-100`}
+            />
+          </div>
         </div>
       </div>
 

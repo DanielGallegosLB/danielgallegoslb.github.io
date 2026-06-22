@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Tilt } from 'react-tilt';
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
 import { github, link } from "../assets";
 import { SectionWrapper } from "../hoc";
-import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+import { usePortfolio } from "../context/PortfolioContext";
+import { ProjectEditorModal } from "./ModalEditors";
 
 const ProjectCard = ({
   index,
@@ -20,11 +21,7 @@ const ProjectCard = ({
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
+        options={{ max: 45, scale: 1, speed: 450 }}
         className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
       >
         <div className='relative w-full h-[230px]'>
@@ -34,36 +31,27 @@ const ProjectCard = ({
             className='w-full h-full object-cover rounded-2xl'
           />
 
-        {source_code_link && (
-          <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
-            <div
-              onClick={() => window.open(source_code_link, "_blank")}
-              className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
-            >
-              <img
-                src={github}
-                alt='source code'
-                className='w-1/2 h-1/2 object-contain'
-              />
+          {source_code_link && (
+            <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
+              <div
+                onClick={() => window.open(source_code_link, "_blank")}
+                className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
+              >
+                <img src={github} alt='source code' className='w-1/2 h-1/2 object-contain' />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {page_link && (
-          <div className='absolute inset-0 flex right-11 justify-end m-3 card-img_hover'>
-            <div
-              onClick={() => window.open(page_link, "_blank")}
-              className='white-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
-            >
-              <img
-                src={link}
-                alt='page link'
-                className='w-1/2 h-1/2 object-contain'
-              />
+          {page_link && (
+            <div className='absolute inset-0 flex right-11 justify-end m-3 card-img_hover'>
+              <div
+                onClick={() => window.open(page_link, "_blank")}
+                className='white-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
+              >
+                <img src={link} alt='page link' className='w-1/2 h-1/2 object-contain' />
+              </div>
             </div>
-          </div>
-        )}
-
+          )}
         </div>
 
         <div className='mt-5'>
@@ -72,11 +60,8 @@ const ProjectCard = ({
         </div>
 
         <div className='mt-4 flex flex-wrap gap-2'>
-          {tags.map((tag) => (
-            <p
-              key={`${name}-${tag.name}`}
-              className={`text-[14px] ${tag.color}`}
-            >
+          {(tags || []).map((tag) => (
+            <p key={`${name}-${tag.name}`} className={`text-[14px] ${tag.color}`}>
               #{tag.name}
             </p>
           ))}
@@ -87,10 +72,15 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const { portfolioData, isAdminMode, updateField } = usePortfolio();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const projects = portfolioData.projects || [];
+
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText} `}>Mi Experiencia</p>
+        <p className={`${styles.sectionSubText}`}>Mi Experiencia</p>
         <h2 className={`${styles.sectionHeadText}`}>Proyectos.</h2>
       </motion.div>
 
@@ -100,19 +90,37 @@ const Works = () => {
           className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
         >
           A continuación, se presentan algunos de mis proyectos destacados, donde
-           demuestro mis habilidades y conocimientos en situaciones reales. 
-           Cada proyecto incluye una breve descripción y enlaces tanto al código 
-           como a las demos en vivo. Estos ejemplos ilustran mi capacidad para 
-           enfrentar desafíos técnicos, manejar diversas herramientas y liderar 
-           proyectos exitosos.
+          demuestro mis habilidades y conocimientos en situaciones reales.
+          Cada proyecto incluye una breve descripción y enlaces tanto al código
+          como a las demos en vivo. Estos ejemplos ilustran mi capacidad para
+          enfrentar desafíos técnicos, manejar diversas herramientas y liderar
+          proyectos exitosos.
         </motion.p>
       </div>
 
-      <div className='mt-20 flex flex-wrap gap-7'>
+      {isAdminMode && (
+        <div className="flex justify-center mt-6 mb-4">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white font-bold py-2 px-6 rounded-xl cursor-pointer transition-colors shadow-lg"
+          >
+            🛠️ Gestionar Proyectos
+          </button>
+        </div>
+      )}
+
+      <div className='mt-12 flex flex-wrap gap-7'>
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}
       </div>
+
+      <ProjectEditorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={projects}
+        onSave={(updated) => updateField("projects", updated)}
+      />
     </>
   );
 };

@@ -2,8 +2,10 @@ import React from "react";
 import { Tilt } from 'react-tilt';
 import { motion } from "framer-motion";
 
+import { usePortfolio } from "../context/PortfolioContext";
+import { getAsset } from "../utils/assetMapper";
+import EditableText from "./EditableText";
 import { styles } from "../styles";
-import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 
@@ -22,8 +24,8 @@ const ServiceCard = ({ index, title, icon }) => (
         className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
       >
         <img
-          src={icon}
-          alt='web-development'
+          src={getAsset(icon)}
+          alt={title}
           className='w-16 h-16 object-contain'
         />
 
@@ -36,26 +38,39 @@ const ServiceCard = ({ index, title, icon }) => (
 );
 
 const About = () => {
+  const { portfolioData, isAdminMode, updateText } = usePortfolio();
+
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>Introducción</p>
-        <h2 className={styles.sectionHeadText}>Resumen.</h2>
+        <div className="flex flex-col">
+          <EditableText
+            value={portfolioData.about.sub}
+            onChange={(val) => updateText("about.sub", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionSubText}
+          />
+          <EditableText
+            value={portfolioData.about.title}
+            onChange={(val) => updateText("about.title", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionHeadText}
+          />
+        </div>
       </motion.div>
 
-      <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
-        className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
-      >
-        Soy un desarrollador de software cualificado con experiencia en tecnologías 
-        full-stack. Disfruto colaborar estrechamente con clientes y equipos para 
-        enfrentar desafíos emergentes, utilizando buenas prácticas y tecnologías 
-        adecuadas a cada necesidad. Me especializo en crear soluciones eficientes, 
-        escalables y amigables con el usuario en entornos reales.
-      </motion.p>
+      <div className="mt-4 max-w-3xl">
+        <EditableText
+          value={portfolioData.about.description}
+          onChange={(val) => updateText("about.description", val)}
+          isAdminMode={isAdminMode}
+          type="textarea"
+          className="text-secondary text-[17px] leading-[30px] block"
+        />
+      </div>
 
       <div className='mt-20 flex flex-wrap gap-10'>
-        {services.map((service, index) => (
+        {portfolioData.services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}
       </div>

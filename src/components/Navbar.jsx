@@ -48,7 +48,7 @@ const Navbar = () => {
           </p>
         </Link>
 
-        <ul className='list-none hidden sm:flex flex-row gap-10'>
+        <ul className='list-none hidden sm:flex flex-row gap-10 items-center'>
           {navLinks.map((nav) => (
             <li
               key={nav.id}
@@ -60,6 +60,13 @@ const Navbar = () => {
               <a href={`#${nav.id}`}>{nav.title}</a>
             </li>
           ))}
+          <li
+            className="text-secondary hover:text-[#915EFF] text-[18px] font-medium cursor-pointer flex items-center transition-colors"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-admin-panel"))}
+            title="Panel de Administrador"
+          >
+            🔑
+          </li>
         </ul>
 
         <div className='sm:hidden flex flex-1 justify-end items-center'>
@@ -90,6 +97,15 @@ const Navbar = () => {
                   <a href={`#${nav.id}`}>{nav.title}</a>
                 </li>
               ))}
+              <li
+                className="font-poppins font-medium cursor-pointer text-[16px] text-secondary hover:text-[#915EFF]"
+                onClick={() => {
+                  setToggle(!toggle);
+                  window.dispatchEvent(new CustomEvent("open-admin-panel"));
+                }}
+              >
+                🔑 Admin
+              </li>
             </ul>
           </div>
         </div>

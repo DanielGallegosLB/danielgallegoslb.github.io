@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
-import { testimonials } from "../constants";
+import { usePortfolio } from "../context/PortfolioContext";
+import { TestimonialEditorModal } from "./ModalEditors";
 
 const FeedbackCard = ({
   index,
@@ -44,21 +45,43 @@ const FeedbackCard = ({
 );
 
 const Feedbacks = () => {
+  const { portfolioData, isAdminMode, updateField } = usePortfolio();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const testimonials = portfolioData.testimonials || [];
+
   return (
     <div className={`mt-12 bg-black-100 rounded-[20px]`}>
-      <div
-        className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}
-      >
+      <div className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}>
         <motion.div variants={textVariant()}>
           <p className={styles.sectionSubText}>Lo que dicen mis clientes</p>
           <h2 className={styles.sectionHeadText}>Testimonios.</h2>
         </motion.div>
+
+        {isAdminMode && (
+          <div className="flex mt-6">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white font-bold py-2 px-6 rounded-xl cursor-pointer transition-colors shadow-lg"
+            >
+              🛠️ Gestionar Testimonios
+            </button>
+          </div>
+        )}
       </div>
+
       <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7`}>
         {testimonials.map((testimonial, index) => (
           <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
         ))}
       </div>
+
+      <TestimonialEditorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        data={testimonials}
+        onSave={(updated) => updateField("testimonials", updated)}
+      />
     </div>
   );
 };

@@ -6,8 +6,11 @@ import { styles } from "../styles";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
+import { usePortfolio } from "../context/PortfolioContext";
+import EditableText from "./EditableText";
 
 const Contact = () => {
+  const { portfolioData, isAdminMode, updateText } = usePortfolio();
   const formRef = useRef();
   const [form, setForm] = useState({
     name: "",
@@ -72,8 +75,18 @@ const Contact = () => {
         variants={slideIn("left", "tween", 0.2, 1)}
         className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
       >
-        <p className={styles.sectionSubText}>Ponte en contacto</p>
-        <h3 className={styles.sectionHeadText}>Contacto.</h3>
+        <EditableText
+          value={portfolioData.contact?.sub || "Ponte en contacto"}
+          onChange={(val) => updateText("contact.sub", val)}
+          isAdminMode={isAdminMode}
+          className={styles.sectionSubText}
+        />
+        <EditableText
+          value={portfolioData.contact?.title || "Contacto."}
+          onChange={(val) => updateText("contact.title", val)}
+          isAdminMode={isAdminMode}
+          className={styles.sectionHeadText}
+        />
 
         <form
           ref={formRef}

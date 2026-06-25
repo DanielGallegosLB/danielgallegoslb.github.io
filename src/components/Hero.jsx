@@ -10,24 +10,33 @@ const Hero = () => {
   const { portfolioData, isAdminMode, updateText } = usePortfolio();
 
   return (
-    <section className={`relative w-full h-screen mx-auto`}>
-      <div
-        className={`absolute inset-0 top-[120px]  max-w-7xl mx-auto ${styles.paddingX} flex flex-row items-start gap-5`}
-      >
-        <div className='flex flex-col justify-center items-center mt-5'>
+    <section className={`relative w-full h-screen mx-auto flex flex-col`}>
+      {/* PC canvas - rectangular container at top */}
+      <div className={`w-full h-[50vh] md:h-[45vh] ${isAdminMode ? "pointer-events-none" : ""}`}>
+        <ComputersCanvas />
+      </div>
+
+      {/* Text content below */}
+      <div className={`flex-1 flex items-start ${styles.paddingX} max-w-7xl mx-auto w-full pt-4 md:pt-8`}>
+        <div className='flex flex-col justify-start items-center mt-2 mr-5'>
           <div className='w-5 h-5 rounded-full bg-[#915EFF]' />
-          <div className='w-1 sm:h-80 h-40 violet-gradient' />
+          <div className='w-1 sm:h-40 h-20 violet-gradient' />
         </div>
 
         <div className="w-full">
           <h1 className={`${styles.heroHeadText} text-white flex flex-wrap items-center gap-x-2`}>
-            <span>Hola, Soy</span>
+            <EditableText
+              value={portfolioData.hero.greeting || "Hola, Soy"}
+              onChange={(val) => updateText("hero.greeting", val)}
+              isAdminMode={isAdminMode}
+              style={{ display: "inline", width: isAdminMode ? "auto" : "auto", minWidth: isAdminMode ? "160px" : "auto" }}
+            />
             <EditableText
               value={portfolioData.hero.name}
               onChange={(val) => updateText("hero.name", val)}
               isAdminMode={isAdminMode}
               className="text-[#915EFF] font-bold"
-              style={{ display: "inline-block", width: isAdminMode ? "200px" : "auto" }}
+              style={{ display: "inline-block", width: isAdminMode ? "auto" : "auto", minWidth: isAdminMode ? "180px" : "auto" }}
             />
           </h1>
           <div className="mt-2 w-full max-w-xl">
@@ -42,9 +51,8 @@ const Hero = () => {
         </div>
       </div>
 
-      <ComputersCanvas />
-
-      <div className='absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center'>
+      {/* Scroll indicator */}
+      <div className='absolute bottom-10 left-0 right-0 flex justify-center items-center'>
         <a href='#about'>
           <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
             <motion.div

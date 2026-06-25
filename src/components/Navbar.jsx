@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { styles } from "../styles";
-import { navLinks } from "../constants";
 import { logo,logo2, menu, close } from "../assets";
+import { usePortfolio } from "../context/PortfolioContext";
+import EditableText from "./EditableText";
 
 const Navbar = () => {
+  const { portfolioData, isAdminMode, updateText } = usePortfolio();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -43,13 +45,27 @@ const Navbar = () => {
           }}
         >
           <img src={logo2} alt='logo' className='w-9 h-9 object-contain' />
-          <p className='text-white text-[18px] font-bold cursor-pointer flex '>
-            <span className='sm:block hidden'>Daniel | Desarrollador</span>
+          <p className='text-white text-[18px] font-bold cursor-pointer flex items-center gap-1'>
+            <EditableText
+              value={portfolioData.brandName}
+              onChange={(val) => updateText("brandName", val)}
+              isAdminMode={isAdminMode}
+              className="sm:inline"
+              style={{ display: "inline", width: isAdminMode ? "100px" : "auto" }}
+            />
+            <span className='sm:inline hidden'>|</span>
+            <EditableText
+              value={portfolioData.brandTagline}
+              onChange={(val) => updateText("brandTagline", val)}
+              isAdminMode={isAdminMode}
+              className="sm:inline hidden"
+              style={{ display: "inline", width: isAdminMode ? "120px" : "auto" }}
+            />
           </p>
         </Link>
 
         <ul className='list-none hidden sm:flex flex-row gap-10 items-center'>
-          {navLinks.map((nav) => (
+          {(portfolioData.navLinks || []).map((nav) => (
             <li
               key={nav.id}
               className={`${
@@ -83,7 +99,7 @@ const Navbar = () => {
             } p-6 redpower-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
           >
             <ul className='list-none flex justify-end items-start flex-1 flex-col gap-4'>
-              {navLinks.map((nav) => (
+              {(portfolioData.navLinks || []).map((nav) => (
                 <li
                   key={nav.id}
                   className={`font-poppins font-medium cursor-pointer text-[16px] ${

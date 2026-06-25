@@ -682,6 +682,247 @@ export const ExperienceEditorModal = ({ isOpen, onClose, data, onSave }) => {
 
 
 // 3. TESTIMONIAL EDITOR MODAL
+// 4. SERVICE CARD EDITOR MODAL
+export const ServiceEditorModal = ({ isOpen, onClose, data, onSave }) => {
+  const [services, setServices] = useState(data || []);
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  const [title, setTitle] = useState("");
+  const [icon, setIcon] = useState("");
+
+  const startEdit = (index) => {
+    setEditingIndex(index);
+    const s = services[index];
+    setTitle(s.title || "");
+    setIcon(s.icon || "");
+  };
+
+  const startAdd = () => {
+    setEditingIndex(-1);
+    setTitle("");
+    setIcon("web");
+  };
+
+  const handleIconUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const base64 = await fileToBase64(file);
+        setIcon(base64);
+      } catch (err) {
+        alert("Error al procesar el ícono: " + err.message);
+      }
+    }
+  };
+
+  const saveItem = () => {
+    if (!title.trim()) {
+      alert("El título del servicio es requerido");
+      return;
+    }
+
+    const updatedService = { title, icon };
+
+    let updatedServices = [...services];
+    if (editingIndex === -1) {
+      updatedServices.push(updatedService);
+    } else {
+      updatedServices[editingIndex] = updatedService;
+    }
+
+    setServices(updatedServices);
+    setEditingIndex(null);
+  };
+
+  const deleteItem = (index) => {
+    if (window.confirm("¿Estás seguro de eliminar este servicio?")) {
+      const updated = services.filter((_, idx) => idx !== index);
+      setServices(updated);
+      if (editingIndex === index) {
+        setEditingIndex(null);
+      }
+    }
+  };
+
+  const moveItem = (index, direction) => {
+    const updated = [...services];
+    const targetIdx = index + direction;
+    if (targetIdx < 0 || targetIdx >= updated.length) return;
+    const temp = updated[index];
+    updated[index] = updated[targetIdx];
+    updated[targetIdx] = temp;
+    setServices(updated);
+  };
+
+  const handleFinalSave = () => {
+    onSave(services);
+    onClose();
+  };
+
+  const iconSuggestions = [
+    { name: "Web", key: "web" },
+    { name: "Mobile", key: "mobile" },
+    { name: "Backend", key: "backend" },
+    { name: "Creator", key: "creator" },
+  ];
+
+  return (
+    <ModalWrapper isOpen={isOpen} onClose={onClose} title="Gestionar Servicios">
+      {editingIndex === null ? (
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={startAdd}
+            className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white px-4 py-2 rounded-lg font-semibold transition-colors w-full cursor-pointer"
+          >
+            + Añadir Nuevo Servicio
+          </button>
+
+          <div className="space-y-3 mt-2">
+            {services.length === 0 ? (
+              <p className="text-secondary text-center py-4">No hay servicios añadidos.</p>
+            ) : (
+              services.map((s, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-[#1d1836] p-4 rounded-xl border border-[#915EFF]/10">
+                  <div className="flex items-center gap-3">
+                    {s.icon && (
+                      <img
+                        src={getAsset(s.icon)}
+                        alt={s.title}
+                        className="w-10 h-10 object-contain rounded-lg bg-tertiary p-1"
+                      />
+                    )}
+                    <h4 className="font-bold text-[16px]">{s.title}</h4>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => moveItem(idx, -1)}
+                      disabled={idx === 0}
+                      className="px-2 py-1 text-sm bg-tertiary rounded hover:bg-secondary/20 disabled:opacity-30 cursor-pointer"
+                    >
+                      ▲
+                    </button>
+                    <button
+                      onClick={() => moveItem(idx, 1)}
+                      disabled={idx === services.length - 1}
+                      className="px-2 py-1 text-sm bg-tertiary rounded hover:bg-secondary/20 disabled:opacity-30 cursor-pointer"
+                    >
+                      ▼
+                    </button>
+                    <button
+                      onClick={() => startEdit(idx)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded cursor-pointer transition-colors"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => deleteItem(idx)}
+                      className="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded cursor-pointer transition-colors"
+                    >
+                      Borrar
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="border-t border-[#915EFF]/20 pt-4 mt-4 flex justify-end gap-2">
+            <button
+              onClick={onClose}
+              className="bg-tertiary hover:bg-tertiary/75 px-4 py-2 rounded-lg cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleFinalSave}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-bold cursor-pointer transition-colors"
+            >
+              Guardar Cambios en Portafolio
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          <h4 className="font-bold text-lg text-[#915EFF]">
+            {editingIndex === -1 ? "Añadir Nuevo Servicio" : "Editar Servicio"}
+          </h4>
+
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-semibold">Título del Servicio</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Ej: Desarrollador Web Full-Stack"
+              className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2.5 outline-none focus:border-[#915EFF]"
+            />
+          </div>
+
+          <div className="border border-[#915EFF]/20 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center">
+            <div className="flex-1">
+              <label className="text-sm font-semibold block mb-1">Ícono del Servicio</label>
+              <div className="flex flex-col gap-2 mb-3">
+                <p className="text-xs text-secondary">Elige un ícono existente:</p>
+                <select
+                  value={iconSuggestions.some(s => s.key === icon) ? icon : ""}
+                  onChange={(e) => e.target.value && setIcon(e.target.value)}
+                  className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2 outline-none w-full text-sm focus:border-[#915EFF]"
+                >
+                  <option value="">-- Personalizado / Otro --</option>
+                  {iconSuggestions.map((s) => (
+                    <option key={s.key} value={s.key}>{s.name}</option>
+                  ))}
+                </select>
+              </div>
+              <p className="text-xs text-secondary">O sube un archivo nuevo:</p>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleIconUpload}
+                className="text-sm text-secondary file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#915EFF]/20 file:text-[#915EFF] hover:file:bg-[#915EFF]/30 file:cursor-pointer"
+              />
+              <p className="text-[11px] text-secondary mt-1.5">O introduce la URL del ícono:</p>
+              <input
+                type="text"
+                value={icon.startsWith("data:image") ? "" : icon}
+                onChange={(e) => setIcon(e.target.value)}
+                placeholder="https://..."
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2 mt-1 outline-none focus:border-[#915EFF] w-full text-xs"
+              />
+            </div>
+
+            {icon && (
+              <div className="flex flex-col items-center">
+                <p className="text-xs text-secondary mb-1">Vista Previa:</p>
+                <img
+                  src={getAsset(icon)}
+                  alt="preview"
+                  className="w-16 h-16 object-contain rounded-lg border border-[#915EFF]/30 bg-tertiary p-1"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => setEditingIndex(null)}
+              className="bg-tertiary hover:bg-tertiary/75 px-4 py-2 rounded-lg cursor-pointer"
+            >
+              Atrás
+            </button>
+            <button
+              onClick={saveItem}
+              className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white px-5 py-2 rounded-lg font-bold cursor-pointer"
+            >
+              Aplicar Cambios
+            </button>
+          </div>
+        </div>
+      )}
+    </ModalWrapper>
+  );
+};
+
 export const TestimonialEditorModal = ({ isOpen, onClose, data, onSave }) => {
   // existing TestimonialEditorModal code remains unchanged
   const [testimonials, setTestimonials] = useState(data || []);

@@ -8,7 +8,15 @@ export const usePortfolio = () => useContext(PortfolioContext);
 export const PortfolioProvider = ({ children }) => {
   // Default data (fallback when JSON missing)
   const defaultData = {
+    brandName: "Daniel",
+    brandTagline: "Desarrollador",
+    navLinks: [
+      { id: "resumen", title: "Resumen" },
+      { id: "trabajo", title: "Trabajo" },
+      { id: "contacto", title: "Contacto" },
+    ],
     hero: {
+      greeting: "Hola, Soy",
       name: "Daniel",
       subtitle: "Desarrollo aplicaciones web completas,\nincluyendo interfaces de usuario, APIs y bases de datos.",
     },
@@ -22,6 +30,19 @@ export const PortfolioProvider = ({ children }) => {
     technologies: constants.technologies || [],
     projects: constants.projects || [],
     testimonials: constants.testimonials || [],
+    works: {
+      sub: "Mi Experiencia",
+      title: "Proyectos.",
+      description: "A continuación, se presentan algunos de mis proyectos destacados, donde demuestro mis habilidades y conocimientos en situaciones reales. Cada proyecto incluye una breve descripción y enlaces tanto al código como a las demos en vivo. Estos ejemplos ilustran mi capacidad para enfrentar desafíos técnicos, manejar diversas herramientas y liderar proyectos exitosos.",
+    },
+    feedbacks: {
+      sub: "Lo que dicen mis clientes",
+      title: "Testimonios.",
+    },
+    contact: {
+      sub: "Ponte en contacto",
+      title: "Contacto.",
+    },
   };
 
   // State
@@ -47,6 +68,9 @@ export const PortfolioProvider = ({ children }) => {
             ...data,
             hero: { ...defaultData.hero, ...data.hero },
             about: { ...defaultData.about, ...data.about },
+            works: { ...defaultData.works, ...data.works },
+            feedbacks: { ...defaultData.feedbacks, ...data.feedbacks },
+            contact: { ...defaultData.contact, ...data.contact },
           });
         }
       } catch (err) {

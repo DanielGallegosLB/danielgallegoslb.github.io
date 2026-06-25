@@ -7,6 +7,7 @@ import { github, link } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 import { usePortfolio } from "../context/PortfolioContext";
+import EditableText from "./EditableText";
 import { ProjectEditorModal } from "./ModalEditors";
 
 const ProjectCard = ({
@@ -72,16 +73,27 @@ const ProjectCard = ({
 };
 
 const Works = () => {
-  const { portfolioData, isAdminMode, updateField } = usePortfolio();
+  const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const projects = portfolioData.projects || [];
+  const worksData = portfolioData.works || {};
 
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText}`}>Mi Experiencia</p>
-        <h2 className={`${styles.sectionHeadText}`}>Proyectos.</h2>
+        <EditableText
+          value={worksData.sub || "Mi Experiencia"}
+          onChange={(val) => updateText("works.sub", val)}
+          isAdminMode={isAdminMode}
+          className={styles.sectionSubText}
+        />
+        <EditableText
+          value={worksData.title || "Proyectos."}
+          onChange={(val) => updateText("works.title", val)}
+          isAdminMode={isAdminMode}
+          className={styles.sectionHeadText}
+        />
       </motion.div>
 
       <div className='w-full flex'>
@@ -89,12 +101,13 @@ const Works = () => {
           variants={fadeIn("", "", 0.1, 1)}
           className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
         >
-          A continuación, se presentan algunos de mis proyectos destacados, donde
-          demuestro mis habilidades y conocimientos en situaciones reales.
-          Cada proyecto incluye una breve descripción y enlaces tanto al código
-          como a las demos en vivo. Estos ejemplos ilustran mi capacidad para
-          enfrentar desafíos técnicos, manejar diversas herramientas y liderar
-          proyectos exitosos.
+          <EditableText
+            value={worksData.description || ""}
+            onChange={(val) => updateText("works.description", val)}
+            isAdminMode={isAdminMode}
+            type="textarea"
+            className="text-secondary text-[17px] leading-[30px] block"
+          />
         </motion.p>
       </div>
 

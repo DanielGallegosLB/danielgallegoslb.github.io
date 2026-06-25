@@ -5,6 +5,7 @@ import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 import { usePortfolio } from "../context/PortfolioContext";
+import EditableText from "./EditableText";
 import { TestimonialEditorModal } from "./ModalEditors";
 
 const FeedbackCard = ({
@@ -45,17 +46,28 @@ const FeedbackCard = ({
 );
 
 const Feedbacks = () => {
-  const { portfolioData, isAdminMode, updateField } = usePortfolio();
+  const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const testimonials = portfolioData.testimonials || [];
+  const feedbacksData = portfolioData.feedbacks || {};
 
   return (
     <div className={`mt-12 bg-black-100 rounded-[20px]`}>
       <div className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}>
         <motion.div variants={textVariant()}>
-          <p className={styles.sectionSubText}>Lo que dicen mis clientes</p>
-          <h2 className={styles.sectionHeadText}>Testimonios.</h2>
+          <EditableText
+            value={feedbacksData.sub || "Lo que dicen mis clientes"}
+            onChange={(val) => updateText("feedbacks.sub", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionSubText}
+          />
+          <EditableText
+            value={feedbacksData.title || "Testimonios."}
+            onChange={(val) => updateText("feedbacks.title", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionHeadText}
+          />
         </motion.div>
 
         {isAdminMode && (

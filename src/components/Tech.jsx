@@ -2,14 +2,18 @@ import React from "react";
 
 import { BallCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
-import { technologies } from "../constants";
+import { usePortfolio } from "../context/PortfolioContext";
+import { getAsset } from "../utils/assetMapper";
 
 const Tech = () => {
+  const { portfolioData } = usePortfolio();
+  const technologies = portfolioData.technologies || [];
+
   return (
     <div className='flex flex-row flex-wrap justify-center gap-10'>
       {technologies.map((technology) => (
         <div className='w-28 h-28' key={technology.name}>
-          <BallCanvas icon={technology.icon} name={technology.name} />
+          <BallCanvas icon={getAsset(technology.icon)} name={technology.name} />
         </div>
       ))}
     </div>

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Tilt } from 'react-tilt';
 import { motion } from "framer-motion";
 
 import { usePortfolio } from "../context/PortfolioContext";
 import { getAsset } from "../utils/assetMapper";
 import EditableText from "./EditableText";
+import { ServiceEditorModal } from "./ModalEditors";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
@@ -38,7 +39,8 @@ const ServiceCard = ({ index, title, icon }) => (
 );
 
 const About = () => {
-  const { portfolioData, isAdminMode, updateText } = usePortfolio();
+  const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
 
   return (
     <>
@@ -69,11 +71,29 @@ const About = () => {
         />
       </div>
 
+      {isAdminMode && (
+        <div className="flex mt-8 mb-2">
+          <button
+            onClick={() => setIsServiceModalOpen(true)}
+            className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white font-bold py-2 px-6 rounded-xl cursor-pointer transition-colors shadow-lg"
+          >
+            🛠️ Gestionar Servicios
+          </button>
+        </div>
+      )}
+
       <div className='mt-20 flex flex-wrap gap-10'>
         {portfolioData.services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}
       </div>
+
+      <ServiceEditorModal
+        isOpen={isServiceModalOpen}
+        onClose={() => setIsServiceModalOpen(false)}
+        data={portfolioData.services || []}
+        onSave={(updated) => updateField("services", updated)}
+      />
     </>
   );
 };

@@ -1,14 +1,31 @@
 {
+  "brandName": "Daniel",
+  "brandTagline": "Desarrollador",
+  "navLinks": [
+    {
+      "id": "resumen",
+      "title": "Resumen"
+    },
+    {
+      "id": "trabajo",
+      "title": "Trabajo"
+    },
+    {
+      "id": "contacto",
+      "title": "Contacto"
+    }
+  ],
   "hero": {
+    "greeting": "Hola, Soy",
     "name": "Daniel",
     "subtitle": "Desarrollo aplicaciones web completas,\nincluyendo interfaces de usuario, APIs y bases de datos."
   },
   "about": {
-    "sub": "Introducción edit",
-    "title": "Resumen. edit",
+    "sub": "Introducción",
+    "title": "Resumen. ",
     "description": "Soy un desarrollador de software cualificado con experiencia en tecnologías full-stack. Disfruto colaborar estrechamente con clientes y equipos para enfrentar desafíos emergentes, utilizando buenas prácticas y tecnologías adecuadas a cada necesidad. Me especializo en crear soluciones eficientes, escalables y amigables con el usuario en entornos reales. edit",
-    "expSub": "Mi recorrido profesional hasta ahora edit",
-    "expTitle": "Experiencia Laboral edit"
+    "expSub": "Mi recorrido profesional hasta ahora",
+    "expTitle": "Experiencia Laboral"
   },
   "services": [
     {
@@ -203,5 +220,18 @@
       "company": "Online Retailers",
       "image": "https://randomuser.me/api/portraits/men/12.jpg"
     }
-  ]
+  ],
+  "works": {
+    "sub": "Mi Experiencia",
+    "title": "Proyectos.",
+    "description": "A continuación, se presentan algunos de mis proyectos destacados, donde demuestro mis habilidades y conocimientos en situaciones reales. Cada proyecto incluye una breve descripción y enlaces tanto al código como a las demos en vivo. Estos ejemplos ilustran mi capacidad para enfrentar desafíos técnicos, manejar diversas herramientas y liderar proyectos exitosos."
+  },
+  "feedbacks": {
+    "sub": "Lo que dicen mis clientes",
+    "title": "Testimonios."
+  },
+  "contact": {
+    "sub": "Ponte en contacto",
+    "title": "Contacto."
+  }
 }

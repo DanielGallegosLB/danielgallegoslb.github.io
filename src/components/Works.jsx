@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import { styles } from "../styles";
 import { github, link } from "../assets";
+import { getAsset } from "../utils/assetMapper";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 import { usePortfolio } from "../context/PortfolioContext";
@@ -27,7 +28,7 @@ const ProjectCard = ({
       >
         <div className='relative w-full h-[230px]'>
           <img
-            src={image}
+            src={getAsset(image)}
             alt='project_image'
             className='w-full h-full object-cover rounded-2xl'
           />
@@ -82,18 +83,20 @@ const Works = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <EditableText
-          value={worksData.sub || "Mi Experiencia"}
-          onChange={(val) => updateText("works.sub", val)}
-          isAdminMode={isAdminMode}
-          className={styles.sectionSubText}
-        />
-        <EditableText
-          value={worksData.title || "Proyectos."}
-          onChange={(val) => updateText("works.title", val)}
-          isAdminMode={isAdminMode}
-          className={styles.sectionHeadText}
-        />
+        <div className="flex flex-col">
+          <EditableText
+            value={worksData.sub || "Mi Experiencia"}
+            onChange={(val) => updateText("works.sub", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionSubText}
+          />
+          <EditableText
+            value={worksData.title || "Proyectos."}
+            onChange={(val) => updateText("works.title", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionHeadText}
+          />
+        </div>
       </motion.div>
 
       <div className='w-full flex'>

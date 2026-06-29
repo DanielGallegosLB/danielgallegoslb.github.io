@@ -56,18 +56,20 @@ const Feedbacks = () => {
     <div className={`mt-12 bg-black-100 rounded-[20px]`}>
       <div className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}>
         <motion.div variants={textVariant()}>
-          <EditableText
-            value={feedbacksData.sub || "Lo que dicen mis clientes"}
-            onChange={(val) => updateText("feedbacks.sub", val)}
-            isAdminMode={isAdminMode}
-            className={styles.sectionSubText}
-          />
-          <EditableText
-            value={feedbacksData.title || "Testimonios."}
-            onChange={(val) => updateText("feedbacks.title", val)}
-            isAdminMode={isAdminMode}
-            className={styles.sectionHeadText}
-          />
+          <div className="flex flex-col">
+            <EditableText
+              value={feedbacksData.sub || "Lo que dicen mis clientes"}
+              onChange={(val) => updateText("feedbacks.sub", val)}
+              isAdminMode={isAdminMode}
+              className={styles.sectionSubText}
+            />
+            <EditableText
+              value={feedbacksData.title || "Testimonios."}
+              onChange={(val) => updateText("feedbacks.title", val)}
+              isAdminMode={isAdminMode}
+              className={styles.sectionHeadText}
+            />
+          </div>
         </motion.div>
 
         {isAdminMode && (

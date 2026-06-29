@@ -30,26 +30,26 @@
   "services": [
     {
       "title": "Desarrollador Web Full-Stack",
-      "icon": "/src/assets/web.png"
+      "icon": "web"
     },
     {
       "title": "Arquitecto de Software",
-      "icon": "/src/assets/mobile.png"
+      "icon": "mobile"
     },
     {
       "title": "Ingeniero DevOps",
-      "icon": "/src/assets/backend.png"
+      "icon": "backend"
     },
     {
       "title": "Desarrollador de API",
-      "icon": "/src/assets/creator.png"
+      "icon": "creator"
     }
   ],
   "experiences": [
     {
       "title": "Full-stack Software Developer",
       "company_name": "Núcleo de Investigación de Data Science (NIDS)",
-      "icon": "/src/assets/company/udla.png",
+      "icon": "udla",
       "iconBg": "#E6DEDD",
       "date": "Enero 2023 - Marzo 2023",
       "points": [
@@ -61,7 +61,7 @@
     {
       "title": "Data Engineer",
       "company_name": "FID Chile Seguros Generales S.A.",
-      "icon": "/src/assets/company/fid.jpg",
+      "icon": "fid",
       "iconBg": "#E6DEDD",
       "date": "Enero 2023 - Abril 2024",
       "points": [
@@ -73,7 +73,7 @@
     {
       "title": "Integration-Delivery Engineer",
       "company_name": "Whale Cloud Technology Co., Ltd",
-      "icon": "/src/assets/company/whalecloud.jpg",
+      "icon": "whalecloud",
       "iconBg": "#E6DEDD",
       "date": "Enero 2025 - Diciembre 2025",
       "points": [
@@ -86,55 +86,55 @@
   "technologies": [
     {
       "name": "HTML 5",
-      "icon": "/src/assets/tech/html.png"
+      "icon": "html"
     },
     {
       "name": "CSS 3",
-      "icon": "/src/assets/tech/css.png"
+      "icon": "css"
     },
     {
       "name": "JavaScript",
-      "icon": "/src/assets/tech/javascript.png"
+      "icon": "javascript"
     },
     {
       "name": "TypeScript",
-      "icon": "/src/assets/tech/typescript.png"
+      "icon": "typescript"
     },
     {
       "name": "React JS",
-      "icon": "/src/assets/tech/reactjs.png"
+      "icon": "reactjs"
     },
     {
       "name": "Redux Toolkit",
-      "icon": "/src/assets/tech/redux.png"
+      "icon": "redux"
     },
     {
       "name": "Tailwind CSS",
-      "icon": "/src/assets/tech/tailwind.png"
+      "icon": "tailwind"
     },
     {
       "name": "Node JS",
-      "icon": "/src/assets/tech/nodejs.png"
+      "icon": "nodejs"
     },
     {
       "name": "MongoDB",
-      "icon": "/src/assets/tech/mongodb.png"
+      "icon": "mongodb"
     },
     {
       "name": "Three JS",
-      "icon": "/src/assets/tech/threejs.png"
+      "icon": "threejs"
     },
     {
       "name": "git",
-      "icon": "/src/assets/tech/git.png"
+      "icon": "git"
     },
     {
       "name": "figma",
-      "icon": "/src/assets/tech/figma.png"
+      "icon": "figma"
     },
     {
       "name": "docker",
-      "icon": "/src/assets/tech/docker.png"
+      "icon": "docker"
     }
   ],
   "projects": [
@@ -155,7 +155,7 @@
           "color": "green-text-gradient"
         }
       ],
-      "image": "/src/assets/ipractica.png",
+      "image": "ipractica",
       "source_code_link": "https://github.com/DanielGallegosLB/19-Frontend-source",
       "page_link": "https://19-frontend.vercel.app/"
     },
@@ -176,7 +176,7 @@
           "color": "green-text-gradient"
         }
       ],
-      "image": "/src/assets/KrapyGames.webp"
+      "image": "krapygames"
     },
     {
       "name": "E-Commerce Store",
@@ -195,7 +195,7 @@
           "color": "green-text-gradient"
         }
       ],
-      "image": "/src/assets/ecommers.webp"
+      "image": "ecommerce"
     }
   ],
   "testimonials": [
@@ -223,7 +223,7 @@
   ],
   "works": {
     "sub": "Mi Experiencia",
-    "title": "Proyectos.",
+    "title": "Proyectos. test",
     "description": "A continuación, se presentan algunos de mis proyectos destacados, donde demuestro mis habilidades y conocimientos en situaciones reales. Cada proyecto incluye una breve descripción y enlaces tanto al código como a las demos en vivo. Estos ejemplos ilustran mi capacidad para enfrentar desafíos técnicos, manejar diversas herramientas y liderar proyectos exitosos."
   },
   "feedbacks": {

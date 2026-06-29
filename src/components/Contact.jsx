@@ -75,18 +75,20 @@ const Contact = () => {
         variants={slideIn("left", "tween", 0.2, 1)}
         className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
       >
-        <EditableText
-          value={portfolioData.contact?.sub || "Ponte en contacto"}
-          onChange={(val) => updateText("contact.sub", val)}
-          isAdminMode={isAdminMode}
-          className={styles.sectionSubText}
-        />
-        <EditableText
-          value={portfolioData.contact?.title || "Contacto."}
-          onChange={(val) => updateText("contact.title", val)}
-          isAdminMode={isAdminMode}
-          className={styles.sectionHeadText}
-        />
+        <div className="flex flex-col">
+          <EditableText
+            value={portfolioData.contact?.sub || "Ponte en contacto"}
+            onChange={(val) => updateText("contact.sub", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionSubText}
+          />
+          <EditableText
+            value={portfolioData.contact?.title || "Contacto."}
+            onChange={(val) => updateText("contact.title", val)}
+            isAdminMode={isAdminMode}
+            className={styles.sectionHeadText}
+          />
+        </div>
 
         <form
           ref={formRef}

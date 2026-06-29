@@ -1,9 +1,15 @@
 import * as assets from '../assets';
 
-/**
- * Returns the imported asset for a given key.
- * If the key is not found, returns the key itself (e.g., an external URL).
- */
+function extractKey(path) {
+  if (!path || typeof path !== 'string') return path;
+  // Extract filename without extension from paths like "/src/assets/web.png" or "/src/assets/tech/html.png"
+  const match = path.match(/\/(\w+)\.[a-z]+$/);
+  if (match) return match[1];
+  return path;
+}
+
 export function getAsset(key) {
-  return assets[key] ?? key;
+  if (key && assets[key]) return assets[key];
+  const extracted = extractKey(key);
+  return extracted && assets[extracted] ? assets[extracted] : key;
 }

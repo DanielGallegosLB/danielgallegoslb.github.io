@@ -50,7 +50,7 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Gracias. Me pondré en contacto contigo lo antes posible..");
+          alert("Muchas gracias. Me pondré en contacto contigo lo antes posible.");
 
           setForm({
             name: "",

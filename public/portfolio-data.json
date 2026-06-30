@@ -22,8 +22,8 @@
   },
   "about": {
     "sub": "Introducción",
-    "title": "Resumen. ",
-    "description": "Soy un desarrollador de software cualificado con experiencia en tecnologías full-stack. Disfruto colaborar estrechamente con clientes y equipos para enfrentar desafíos emergentes, utilizando buenas prácticas y tecnologías adecuadas a cada necesidad. Me especializo en crear soluciones eficientes, escalables y amigables con el usuario en entornos reales. edit",
+    "title": "Resumen",
+    "description": "Soy un desarrollador de software cualificado con experiencia en tecnologías full-stack. Disfruto colaborar estrechamente con clientes y equipos para enfrentar desafíos emergentes, utilizando buenas prácticas y tecnologías adecuadas a cada necesidad. Me especializo en crear soluciones eficientes, escalables y amigables con el usuario en entornos reales.",
     "expSub": "Mi recorrido profesional hasta ahora",
     "expTitle": "Experiencia Laboral"
   },
@@ -228,10 +228,10 @@
   },
   "feedbacks": {
     "sub": "Lo que dicen mis clientes",
-    "title": "Testimonios."
+    "title": "Testimonios"
   },
   "contact": {
     "sub": "Ponte en contacto",
-    "title": "Contacto."
+    "title": "Contacto"
   }
 }

@@ -1,5 +1,6 @@
-import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useEffect, useRef } from "react";
+import * as THREE from "three";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   Decal,
   Float,
@@ -31,10 +32,55 @@ const Ball = (props) => {
           scale={1}
           map={decal}
           flatShading
-          
         />
       </mesh>
     </Float>
+  );
+};
+
+const ReturnToFrontControls = () => {
+  const controlsRef = useRef();
+  const { camera, invalidate } = useThree();
+  const animating = useRef(false);
+  const interacting = useRef(false);
+  const home = useRef(new THREE.Vector3(0, 0, 5));
+
+  useEffect(() => {
+    if (controlsRef.current) controlsRef.current.saveState();
+  }, []);
+
+  useFrame((_, delta) => {
+    const controls = controlsRef.current;
+    if (!controls || interacting.current || !animating.current) return;
+
+    const distance = camera.position.distanceTo(home.current);
+    if (distance > 0.001) {
+      camera.position.lerp(home.current, Math.min(1, delta * 3));
+      controls.update();
+      invalidate();
+    } else {
+      camera.position.copy(home.current);
+      controls.update();
+      controls.saveState();
+      animating.current = false;
+    }
+  });
+
+  return (
+    <OrbitControls
+      ref={controlsRef}
+      enableZoom={false}
+      enableDamping={false}
+      onStart={() => {
+        interacting.current = true;
+        animating.current = false;
+      }}
+      onEnd={() => {
+        interacting.current = false;
+        animating.current = true;
+        invalidate();
+      }}
+    />
   );
 };
 
@@ -44,9 +90,10 @@ const BallCanvas = ({ icon }) => {
       frameloop='demand'
       dpr={[1, 2]}
       gl={{ preserveDrawingBuffer: true }}
+      camera={{ position: [0, 0, 5] }}
     >
       <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls enableZoom={false} />
+        <ReturnToFrontControls />
         <Ball imgUrl={icon} />
       </Suspense>
 

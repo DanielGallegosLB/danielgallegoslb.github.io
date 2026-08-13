@@ -56,30 +56,48 @@ export const PortfolioProvider = ({ children }) => {
   const [githubBranch, setGithubBranch] = useState(localStorage.getItem("portfolio_gh_branch") || "main");
   const [saveStatus, setSaveStatus] = useState({ loading: false, error: null, success: false });
 
-  // Load data from public JSON (dev)
+  // Load data from public JSON (dev). Retries with timeout so the page
+  // never gets stuck on the fallback defaults when the request is slow.
   useEffect(() => {
     const loadData = async () => {
-      try {
-        const response = await fetch("./portfolio-data.json?t=" + new Date().getTime());
-        if (response.ok) {
-          const data = await response.json();
-          // Merge with defaults to keep new fields safe
-          setPortfolioData({
-            ...defaultData,
-            ...data,
-            hero: { ...defaultData.hero, ...data.hero },
-            about: { ...defaultData.about, ...data.about },
-            works: { ...defaultData.works, ...data.works },
-            feedbacks: { ...defaultData.feedbacks, ...data.feedbacks },
-            contact: { ...defaultData.contact, ...data.contact },
-          });
+      const MAX_ATTEMPTS = 3;
+      for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 7000);
+          const response = await fetch(
+            "./portfolio-data.json?t=" + new Date().getTime(),
+            { signal: controller.signal }
+          );
+          clearTimeout(timeout);
+          if (response.ok) {
+            const data = await response.json();
+            // Merge with defaults to keep new fields safe
+            setPortfolioData({
+              ...defaultData,
+              ...data,
+              hero: { ...defaultData.hero, ...data.hero },
+              about: { ...defaultData.about, ...data.about },
+              works: { ...defaultData.works, ...data.works },
+              feedbacks: { ...defaultData.feedbacks, ...data.feedbacks },
+              contact: { ...defaultData.contact, ...data.contact },
+            });
+            setLoading(false);
+            return;
+          }
+          throw new Error(`HTTP ${response.status}`);
+        } catch (err) {
+          console.warn(
+            `Could not load portfolio-data.json (attempt ${attempt}/${MAX_ATTEMPTS}):`,
+            err
+          );
         }
-      } catch (err) {
-        console.warn("Could not load portfolio-data.json, using defaults.", err);
-      } finally {
-        setLoading(false);
+        if (attempt < MAX_ATTEMPTS) await sleep(800);
       }
+      console.warn("Using fallback defaults after all load attempts failed.");
+      setLoading(false);
     };
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     loadData();
   }, []);
 

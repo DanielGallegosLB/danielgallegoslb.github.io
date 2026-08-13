@@ -23,7 +23,12 @@ const ProjectCard = ({
   page_link,
 }) => {
   return (
-    <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
+    <motion.div
+      variants={fadeIn("up", "spring", 0, 0.3)}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+    >
       <Tilt
         options={{ max: 45, scale: 1, speed: 450 }}
         className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
@@ -105,7 +110,7 @@ const Works = () => {
 
       <div className='w-full flex'>
         <motion.p
-          variants={fadeIn("", "", 0.1, 1)}
+          variants={fadeIn("", "", 0, 0.3)}
           className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
         >
           <EditableText

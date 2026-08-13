@@ -73,8 +73,8 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={logo2} alt='logo' className='w-9 h-9 object-contain' />
-          <p className='text-white text-[18px] font-bold cursor-pointer flex items-center gap-1'>
+          <img src={logo2} alt='logo' className='w-8 h-8 object-contain' />
+          <p className='text-white text-[16px] font-bold cursor-pointer flex items-center gap-1'>
             <EditableText
               value={data.brandName}
               onChange={(val) => updateText("brandName", val)}
@@ -93,13 +93,13 @@ const Navbar = () => {
           </p>
         </Link>
 
-        <ul className='list-none hidden sm:flex flex-row gap-10 items-center'>
+        <ul className='list-none hidden lg:flex flex-row gap-6 items-center'>
           {(data.navLinks || []).map((nav) => (
             <li
               key={nav.id}
               className={`${
                 active === nav.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
+              } hover:text-white text-[15px] font-medium cursor-pointer`}
               onClick={() => setActive(nav.title)}
             >
               <a href={`#${nav.id}`}>{nav.title}</a>
@@ -107,7 +107,7 @@ const Navbar = () => {
           ))}
           <LanguageToggle lang={lang} setLang={setLang} />
           <li
-            className="text-secondary hover:text-[#915EFF] text-[18px] font-medium cursor-pointer flex items-center transition-colors"
+            className="text-secondary hover:text-[#915EFF] text-[15px] font-medium cursor-pointer flex items-center transition-colors"
             onClick={() => window.dispatchEvent(new CustomEvent("open-admin-panel"))}
             title="Panel de Administrador"
           >
@@ -115,7 +115,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className='sm:hidden flex flex-1 justify-end items-center'>
+        <div className='lg:hidden flex flex-1 justify-end items-center'>
           <img
             src={toggle ? close : menu}
             alt='menu'

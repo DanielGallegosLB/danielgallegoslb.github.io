@@ -5,8 +5,9 @@
   "type": "module",
   "homepage": "https://danielgallegoslb.github.io",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
+    "translate": "node scripts/translate-missing.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

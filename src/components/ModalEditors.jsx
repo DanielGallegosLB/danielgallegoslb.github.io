@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAsset } from "../utils/assetMapper";
 
 // Helper to convert file to Base64
@@ -37,6 +37,11 @@ const ModalWrapper = ({ isOpen, onClose, title, children }) => {
 export const ProjectEditorModal = ({ isOpen, onClose, data, onSave }) => {
   const [projects, setProjects] = useState(data || []);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [dragIndex, setDragIndex] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) setProjects(data || []);
+  }, [isOpen, data]);
   
   // Form fields
   const [name, setName] = useState("");
@@ -141,6 +146,18 @@ export const ProjectEditorModal = ({ isOpen, onClose, data, onSave }) => {
     setProjects(updated);
   };
 
+  const handleDrop = (targetIndex) => {
+    if (dragIndex === null || dragIndex === targetIndex) {
+      setDragIndex(null);
+      return;
+    }
+    const updated = [...projects];
+    const [moved] = updated.splice(dragIndex, 1);
+    updated.splice(targetIndex, 0, moved);
+    setProjects(updated);
+    setDragIndex(null);
+  };
+
   const handleFinalSave = () => {
     onSave(projects);
     onClose();
@@ -157,12 +174,26 @@ export const ProjectEditorModal = ({ isOpen, onClose, data, onSave }) => {
             + Añadir Nuevo Proyecto
           </button>
           
+          <p className="text-[11px] text-secondary -mt-1">
+            💡 Arrastra las tarjetas para reordenar, o usa las flechas ▲/▼.
+          </p>
+
           <div className="space-y-3 mt-2">
             {projects.length === 0 ? (
               <p className="text-secondary text-center py-4">No hay proyectos añadidos.</p>
             ) : (
               projects.map((proj, idx) => (
-                <div key={idx} className="flex items-center justify-between bg-[#1d1836] p-4 rounded-xl border border-[#915EFF]/10">
+                <div
+                  key={idx}
+                  draggable
+                  onDragStart={() => setDragIndex(idx)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => handleDrop(idx)}
+                  onDragEnd={() => setDragIndex(null)}
+                  className={`flex items-center justify-between bg-[#1d1836] p-4 rounded-xl border cursor-grab active:cursor-grabbing transition-opacity ${
+                    dragIndex === idx ? "opacity-40 border-[#915EFF]/60" : "border-[#915EFF]/10"
+                  }`}
+                >
                   <div className="flex items-center gap-3">
                     {proj.image && (
                       <img
@@ -346,6 +377,10 @@ export const ProjectEditorModal = ({ isOpen, onClose, data, onSave }) => {
 export const ExperienceEditorModal = ({ isOpen, onClose, data, onSave }) => {
   const [experiences, setExperiences] = useState(data || []);
   const [editingIndex, setEditingIndex] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) setExperiences(data || []);
+  }, [isOpen, data]);
 
   // Form fields
   const [title, setTitle] = useState("");
@@ -687,6 +722,10 @@ export const ServiceEditorModal = ({ isOpen, onClose, data, onSave }) => {
   const [services, setServices] = useState(data || []);
   const [editingIndex, setEditingIndex] = useState(null);
 
+  useEffect(() => {
+    if (isOpen) setServices(data || []);
+  }, [isOpen, data]);
+
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState("");
 
@@ -926,6 +965,10 @@ export const ServiceEditorModal = ({ isOpen, onClose, data, onSave }) => {
 export const TestimonialEditorModal = ({ isOpen, onClose, data, onSave }) => {
   // existing TestimonialEditorModal code remains unchanged
   const [testimonials, setTestimonials] = useState(data || []);
+
+  useEffect(() => {
+    if (isOpen) setTestimonials(data || []);
+  }, [isOpen, data]);
 
   const [editingIndex, setEditingIndex] = useState(null);
 

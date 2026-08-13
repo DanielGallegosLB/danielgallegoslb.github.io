@@ -13,17 +13,17 @@ const Hero = () => {
   const data = localizeData(portfolioData, isAdminMode);
 
   return (
-    <section className={`relative w-full h-screen mx-auto flex flex-col`}>
+    <section className={`relative w-full min-h-[70vh] mx-auto flex flex-col`}>
       {/* PC canvas - rectangular container at top */}
-      <div className={`w-full h-[50vh] md:h-[45vh] ${isAdminMode ? "pointer-events-none" : ""}`}>
+      <div className={`w-full h-[30vh] md:h-[28vh] ${isAdminMode ? "pointer-events-none" : ""}`}>
         <ComputersCanvas />
       </div>
 
       {/* Text content below */}
-      <div className={`flex-1 flex items-start ${styles.paddingX} max-w-7xl mx-auto w-full pt-4 md:pt-8`}>
+      <div className={`flex-0 flex items-center ${styles.paddingX} max-w-7xl mx-auto w-full pt-2 md:pt-4`}>
         <div className='flex flex-col justify-start items-center mt-2 mr-5'>
           <div className='w-5 h-5 rounded-full bg-[#915EFF]' />
-          <div className='w-1 sm:h-40 h-20 violet-gradient' />
+          <div className='w-1 sm:h-28 h-20 violet-gradient' />
         </div>
 
         <div className="w-full">

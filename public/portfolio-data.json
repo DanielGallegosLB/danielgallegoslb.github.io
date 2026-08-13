@@ -22,12 +22,12 @@
   "hero": {
     "greeting": "Hola, Soy",
     "name": "Daniel Peñaloza Gallegos",
-    "subtitle": "Desarrollo aplicaciones web completas,\nincluyendo interfaces de usuario, APIs y bases de datos."
+    "subtitle": "Desarrollador de software con experiencia en tecnologías full-stack. Me especializo en crear soluciones eficientes, escalables y amigables con el usuario en entornos reales."
   },
   "about": {
     "sub": "Introducción",
     "title": "Resumen",
-    "description": "Soy un desarrollador de software cualificado con experiencia en tecnologías full-stack. Disfruto colaborar estrechamente con clientes y equipos para enfrentar desafíos emergentes, utilizando buenas prácticas y tecnologías adecuadas a cada necesidad. Me especializo en crear soluciones eficientes, escalables y amigables con el usuario en entornos reales.",
+    "description": "Desarrollador con 3+ años de experiencia profesional construyendo APIs, pipelines de datos y sistemas escalables. Busco un rol donde mis soluciones tengan impacto real en el producto.",
     "expSub": "Mi recorrido profesional hasta ahora",
     "expTitle": "Experiencia Laboral"
   },

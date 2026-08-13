@@ -29,6 +29,8 @@ export const PortfolioProvider = ({ children }) => {
     services: constants.services || [],
     experiences: constants.experiences || [],
     technologies: constants.technologies || [],
+    skills: [],
+    certifications: [],
     projects: constants.projects || [],
     testimonials: constants.testimonials || [],
     works: {

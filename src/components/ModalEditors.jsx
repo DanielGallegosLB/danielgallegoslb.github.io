@@ -962,6 +962,592 @@ export const ServiceEditorModal = ({ isOpen, onClose, data, onSave }) => {
   );
 };
 
+// 5. SKILL LEVELS EDITOR MODAL (technologies with years of experience)
+export const SkillsEditorModal = ({ isOpen, onClose, data, onSave }) => {
+  const [skills, setSkills] = useState(data || []);
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) setSkills(data || []);
+  }, [isOpen, data]);
+
+  const [name, setName] = useState("");
+  const [years, setYears] = useState(1);
+  const [icon, setIcon] = useState("");
+
+  const iconSuggestions = [
+    { name: "JavaScript", key: "javascript" },
+    { name: "TypeScript", key: "typescript" },
+    { name: "HTML 5", key: "html" },
+    { name: "CSS 3", key: "css" },
+    { name: "React JS", key: "reactjs" },
+    { name: "Redux", key: "redux" },
+    { name: "Tailwind CSS", key: "tailwind" },
+    { name: "Node JS", key: "nodejs" },
+    { name: "MongoDB", key: "mongodb" },
+    { name: "Three JS", key: "threejs" },
+    { name: "Git", key: "git" },
+    { name: "Figma", key: "figma" },
+    { name: "Docker", key: "docker" },
+  ];
+
+  const startEdit = (index) => {
+    setEditingIndex(index);
+    const s = skills[index];
+    setName(s.name || "");
+    setYears(Number(s.years) || 0);
+    setIcon(s.icon || "");
+  };
+
+  const startAdd = () => {
+    setEditingIndex(-1);
+    setName("");
+    setYears(1);
+    setIcon("");
+  };
+
+  const handleIconUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const base64 = await fileToBase64(file);
+        setIcon(base64);
+      } catch (err) {
+        alert("Error al procesar el ícono: " + err.message);
+      }
+    }
+  };
+
+  const saveItem = () => {
+    if (!name.trim()) {
+      alert("El nombre de la tecnología es requerido");
+      return;
+    }
+
+    const updatedSkill = {
+      name,
+      years: Math.max(0, Number(years) || 0),
+      icon,
+    };
+
+    let updatedSkills = [...skills];
+    if (editingIndex === -1) {
+      updatedSkills.push(updatedSkill);
+    } else {
+      updatedSkills[editingIndex] = updatedSkill;
+    }
+
+    setSkills(updatedSkills);
+    setEditingIndex(null);
+  };
+
+  const deleteItem = (index) => {
+    if (window.confirm("¿Estás seguro de eliminar esta tecnología?")) {
+      const updated = skills.filter((_, idx) => idx !== index);
+      setSkills(updated);
+      if (editingIndex === index) {
+        setEditingIndex(null);
+      }
+    }
+  };
+
+  const moveItem = (index, direction) => {
+    const updated = [...skills];
+    const targetIdx = index + direction;
+    if (targetIdx < 0 || targetIdx >= updated.length) return;
+    const temp = updated[index];
+    updated[index] = updated[targetIdx];
+    updated[targetIdx] = temp;
+    setSkills(updated);
+  };
+
+  const handleFinalSave = () => {
+    onSave(skills);
+    onClose();
+  };
+
+  return (
+    <ModalWrapper isOpen={isOpen} onClose={onClose} title="Gestionar Nivel de Tecnologías">
+      {editingIndex === null ? (
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={startAdd}
+            className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white px-4 py-2 rounded-lg font-semibold transition-colors w-full cursor-pointer"
+          >
+            + Añadir Nueva Tecnología
+          </button>
+
+          <div className="space-y-3 mt-2">
+            {skills.length === 0 ? (
+              <p className="text-secondary text-center py-4">No hay tecnologías añadidas.</p>
+            ) : (
+              skills.map((s, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-[#1d1836] p-4 rounded-xl border border-[#915EFF]/10">
+                  <div className="flex items-center gap-3">
+                    {s.icon && (
+                      <img
+                        src={getAsset(s.icon)}
+                        alt={s.name}
+                        className="w-10 h-10 object-contain rounded-lg bg-tertiary p-1"
+                      />
+                    )}
+                    <div>
+                      <h4 className="font-bold text-[16px]">{s.name}</h4>
+                      <p className="text-[13px] text-[#915EFF]">
+                        {s.years || 0} año{s.years === 1 ? "" : "s"} de experiencia
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => moveItem(idx, -1)}
+                      disabled={idx === 0}
+                      className="px-2 py-1 text-sm bg-tertiary rounded hover:bg-secondary/20 disabled:opacity-30 cursor-pointer"
+                    >
+                      ▲
+                    </button>
+                    <button
+                      onClick={() => moveItem(idx, 1)}
+                      disabled={idx === skills.length - 1}
+                      className="px-2 py-1 text-sm bg-tertiary rounded hover:bg-secondary/20 disabled:opacity-30 cursor-pointer"
+                    >
+                      ▼
+                    </button>
+                    <button
+                      onClick={() => startEdit(idx)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded cursor-pointer transition-colors"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => deleteItem(idx)}
+                      className="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded cursor-pointer transition-colors"
+                    >
+                      Borrar
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="border-t border-[#915EFF]/20 pt-4 mt-4 flex justify-end gap-2">
+            <button
+              onClick={onClose}
+              className="bg-tertiary hover:bg-tertiary/75 px-4 py-2 rounded-lg cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleFinalSave}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-bold cursor-pointer transition-colors"
+            >
+              Guardar Cambios en Portafolio
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          <h4 className="font-bold text-lg text-[#915EFF]">
+            {editingIndex === -1 ? "Añadir Nueva Tecnología" : "Editar Tecnología"}
+          </h4>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-semibold">Nombre de la Tecnología</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Ej: React JS"
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2.5 outline-none focus:border-[#915EFF]"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-semibold">Años de Experiencia</label>
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={years}
+                onChange={(e) => setYears(e.target.value)}
+                placeholder="Ej: 3"
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2.5 outline-none focus:border-[#915EFF]"
+              />
+            </div>
+          </div>
+
+          <div className="border border-[#915EFF]/20 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center">
+            <div className="flex-1">
+              <label className="text-sm font-semibold block mb-1">Ícono de la Tecnología</label>
+              <div className="flex flex-col gap-2 mb-3">
+                <p className="text-xs text-secondary">Elige un ícono existente:</p>
+                <select
+                  value={iconSuggestions.some((s) => s.key === icon) ? icon : ""}
+                  onChange={(e) => e.target.value && setIcon(e.target.value)}
+                  className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2 outline-none w-full text-sm focus:border-[#915EFF]"
+                >
+                  <option value="">-- Sin ícono / Otro --</option>
+                  {iconSuggestions.map((s) => (
+                    <option key={s.key} value={s.key}>{s.name}</option>
+                  ))}
+                </select>
+              </div>
+              <p className="text-xs text-secondary">O sube un archivo nuevo:</p>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleIconUpload}
+                className="text-sm text-secondary file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#915EFF]/20 file:text-[#915EFF] hover:file:bg-[#915EFF]/30 file:cursor-pointer"
+              />
+              <p className="text-[11px] text-secondary mt-1.5">O introduce la URL del ícono:</p>
+              <input
+                type="text"
+                value={icon.startsWith("data:image") ? "" : icon}
+                onChange={(e) => setIcon(e.target.value)}
+                placeholder="https://..."
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2 mt-1 outline-none focus:border-[#915EFF] w-full text-xs"
+              />
+            </div>
+
+            {icon && (
+              <div className="flex flex-col items-center">
+                <p className="text-xs text-secondary mb-1">Vista Previa:</p>
+                <img
+                  src={getAsset(icon)}
+                  alt="preview"
+                  className="w-16 h-16 object-contain rounded-lg border border-[#915EFF]/30 bg-tertiary p-1"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => setEditingIndex(null)}
+              className="bg-tertiary hover:bg-tertiary/75 px-4 py-2 rounded-lg cursor-pointer"
+            >
+              Atrás
+            </button>
+            <button
+              onClick={saveItem}
+              className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white px-5 py-2 rounded-lg font-bold cursor-pointer"
+            >
+              Aplicar Cambios
+            </button>
+          </div>
+        </div>
+      )}
+    </ModalWrapper>
+  );
+};
+
+// 6. CERTIFICATIONS / EDUCATION / COURSES EDITOR MODAL
+export const CertificationsEditorModal = ({ isOpen, onClose, data, onSave }) => {
+  const [certifications, setCertifications] = useState(data || []);
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) setCertifications(data || []);
+  }, [isOpen, data]);
+
+  const [title, setTitle] = useState("");
+  const [issuer, setIssuer] = useState("");
+  const [date, setDate] = useState("");
+  const [link, setLink] = useState("");
+  const [icon, setIcon] = useState("");
+
+  const iconSuggestions = [
+    { name: "Universidad (UDLA)", key: "udla" },
+    { name: "Web", key: "web" },
+    { name: "Mobile", key: "mobile" },
+    { name: "Backend", key: "backend" },
+    { name: "Creator", key: "creator" },
+    { name: "Git", key: "git" },
+    { name: "Docker", key: "docker" },
+    { name: "Figma", key: "figma" },
+  ];
+
+  const startEdit = (index) => {
+    setEditingIndex(index);
+    const c = certifications[index];
+    setTitle(c.title || "");
+    setIssuer(c.issuer || "");
+    setDate(c.date || "");
+    setLink(c.link || "");
+    setIcon(c.icon || "");
+  };
+
+  const startAdd = () => {
+    setEditingIndex(-1);
+    setTitle("");
+    setIssuer("");
+    setDate("");
+    setLink("");
+    setIcon("");
+  };
+
+  const handleIconUpload = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const base64 = await fileToBase64(file);
+        setIcon(base64);
+      } catch (err) {
+        alert("Error al procesar el ícono: " + err.message);
+      }
+    }
+  };
+
+  const saveItem = () => {
+    if (!title.trim()) {
+      alert("El título de la certificación es requerido");
+      return;
+    }
+
+    const updatedCert = {
+      title,
+      issuer,
+      date,
+      link,
+      icon,
+    };
+
+    let updatedCerts = [...certifications];
+    if (editingIndex === -1) {
+      updatedCerts.push(updatedCert);
+    } else {
+      updatedCerts[editingIndex] = updatedCert;
+    }
+
+    setCertifications(updatedCerts);
+    setEditingIndex(null);
+  };
+
+  const deleteItem = (index) => {
+    if (window.confirm("¿Estás seguro de eliminar esta certificación?")) {
+      const updated = certifications.filter((_, idx) => idx !== index);
+      setCertifications(updated);
+      if (editingIndex === index) {
+        setEditingIndex(null);
+      }
+    }
+  };
+
+  const moveItem = (index, direction) => {
+    const updated = [...certifications];
+    const targetIdx = index + direction;
+    if (targetIdx < 0 || targetIdx >= updated.length) return;
+    const temp = updated[index];
+    updated[index] = updated[targetIdx];
+    updated[targetIdx] = temp;
+    setCertifications(updated);
+  };
+
+  const handleFinalSave = () => {
+    onSave(certifications);
+    onClose();
+  };
+
+  return (
+    <ModalWrapper isOpen={isOpen} onClose={onClose} title="Gestionar Certificaciones, Educación y Cursos">
+      {editingIndex === null ? (
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={startAdd}
+            className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white px-4 py-2 rounded-lg font-semibold transition-colors w-full cursor-pointer"
+          >
+            + Añadir Nueva Certificación / Curso
+          </button>
+
+          <div className="space-y-3 mt-2">
+            {certifications.length === 0 ? (
+              <p className="text-secondary text-center py-4">No hay certificaciones añadidas.</p>
+            ) : (
+              certifications.map((c, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-[#1d1836] p-4 rounded-xl border border-[#915EFF]/10">
+                  <div className="flex items-center gap-3">
+                    {c.icon ? (
+                      <img
+                        src={getAsset(c.icon)}
+                        alt={c.title}
+                        className="w-10 h-10 object-contain rounded-lg bg-tertiary p-1"
+                      />
+                    ) : (
+                      <span className="text-2xl">🎓</span>
+                    )}
+                    <div>
+                      <h4 className="font-bold text-[16px]">{c.title}</h4>
+                      <p className="text-[13px] text-secondary">
+                        {c.issuer} {c.date && <span className="text-[#915EFF]">| {c.date}</span>}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => moveItem(idx, -1)}
+                      disabled={idx === 0}
+                      className="px-2 py-1 text-sm bg-tertiary rounded hover:bg-secondary/20 disabled:opacity-30 cursor-pointer"
+                    >
+                      ▲
+                    </button>
+                    <button
+                      onClick={() => moveItem(idx, 1)}
+                      disabled={idx === certifications.length - 1}
+                      className="px-2 py-1 text-sm bg-tertiary rounded hover:bg-secondary/20 disabled:opacity-30 cursor-pointer"
+                    >
+                      ▼
+                    </button>
+                    <button
+                      onClick={() => startEdit(idx)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded cursor-pointer transition-colors"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => deleteItem(idx)}
+                      className="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded cursor-pointer transition-colors"
+                    >
+                      Borrar
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="border-t border-[#915EFF]/20 pt-4 mt-4 flex justify-end gap-2">
+            <button
+              onClick={onClose}
+              className="bg-tertiary hover:bg-tertiary/75 px-4 py-2 rounded-lg cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleFinalSave}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg font-bold cursor-pointer transition-colors"
+            >
+              Guardar Cambios en Portafolio
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          <h4 className="font-bold text-lg text-[#915EFF]">
+            {editingIndex === -1 ? "Añadir Certificación / Curso" : "Editar Certificación"}
+          </h4>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-semibold">Título / Certificación</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Ej: AWS Certified Cloud Practitioner"
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2.5 outline-none focus:border-[#915EFF]"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-semibold">Institución / Plataforma</label>
+              <input
+                type="text"
+                value={issuer}
+                onChange={(e) => setIssuer(e.target.value)}
+                placeholder="Ej: Coursera, Universidad..."
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2.5 outline-none focus:border-[#915EFF]"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-semibold">Fecha (opcional)</label>
+              <input
+                type="text"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                placeholder="Ej: Enero 2025"
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2.5 outline-none focus:border-[#915EFF]"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-semibold">Enlace de Verificación (opcional)</label>
+              <input
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+                placeholder="https://..."
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2.5 outline-none focus:border-[#915EFF]"
+              />
+            </div>
+          </div>
+
+          <div className="border border-[#915EFF]/20 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center">
+            <div className="flex-1">
+              <label className="text-sm font-semibold block mb-1">Ícono (opcional)</label>
+              <div className="flex flex-col gap-2 mb-3">
+                <p className="text-xs text-secondary">Elige un ícono existente:</p>
+                <select
+                  value={iconSuggestions.some((s) => s.key === icon) ? icon : ""}
+                  onChange={(e) => e.target.value && setIcon(e.target.value)}
+                  className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2 outline-none w-full text-sm focus:border-[#915EFF]"
+                >
+                  <option value="">-- Sin ícono / Otro --</option>
+                  {iconSuggestions.map((s) => (
+                    <option key={s.key} value={s.key}>{s.name}</option>
+                  ))}
+                </select>
+              </div>
+              <p className="text-xs text-secondary">O sube un archivo nuevo:</p>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleIconUpload}
+                className="text-sm text-secondary file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#915EFF]/20 file:text-[#915EFF] hover:file:bg-[#915EFF]/30 file:cursor-pointer"
+              />
+              <p className="text-[11px] text-secondary mt-1.5">O introduce la URL del ícono:</p>
+              <input
+                type="text"
+                value={icon.startsWith("data:image") ? "" : icon}
+                onChange={(e) => setIcon(e.target.value)}
+                placeholder="https://..."
+                className="bg-[#1d1836] border border-[#915EFF]/30 rounded-lg p-2 mt-1 outline-none focus:border-[#915EFF] w-full text-xs"
+              />
+            </div>
+
+            {icon && (
+              <div className="flex flex-col items-center">
+                <p className="text-xs text-secondary mb-1">Vista Previa:</p>
+                <img
+                  src={getAsset(icon)}
+                  alt="preview"
+                  className="w-16 h-16 object-contain rounded-lg border border-[#915EFF]/30 bg-tertiary p-1"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => setEditingIndex(null)}
+              className="bg-tertiary hover:bg-tertiary/75 px-4 py-2 rounded-lg cursor-pointer"
+            >
+              Atrás
+            </button>
+            <button
+              onClick={saveItem}
+              className="bg-[#915EFF] hover:bg-[#7e4ee0] text-white px-5 py-2 rounded-lg font-bold cursor-pointer"
+            >
+              Aplicar Cambios
+            </button>
+          </div>
+        </div>
+      )}
+    </ModalWrapper>
+  );
+};
+
 export const TestimonialEditorModal = ({ isOpen, onClose, data, onSave }) => {
   // existing TestimonialEditorModal code remains unchanged
   const [testimonials, setTestimonials] = useState(data || []);

@@ -103,6 +103,16 @@ export const LanguageProvider = ({ children }) => {
             "designation",
           ]),
         })),
+        skills: (data.skills || []).map((skill) => ({
+          ...skill,
+          name: en.skills?.[skill.name]?.name || skill.name,
+        })),
+        certifications: (data.certifications || []).map((cert) => ({
+          ...cert,
+          title: en.certifications?.[cert.title]?.title || cert.title,
+          issuer: en.certifications?.[cert.title]?.issuer || cert.issuer,
+          date: translateDate(cert.date),
+        })),
         works: {
           ...data.works,
           sub: en.works?.sub || data.works?.sub,

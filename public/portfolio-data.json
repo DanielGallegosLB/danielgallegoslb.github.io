@@ -141,6 +141,68 @@
       "icon": "docker"
     }
   ],
+  "skills": [
+    {
+      "name": "JavaScript",
+      "icon": "javascript",
+      "years": 3
+    },
+    {
+      "name": "TypeScript",
+      "icon": "typescript",
+      "years": 2
+    },
+    {
+      "name": "React JS",
+      "icon": "reactjs",
+      "years": 2
+    },
+    {
+      "name": "Node JS",
+      "icon": "nodejs",
+      "years": 3
+    },
+    {
+      "name": "MongoDB",
+      "icon": "mongodb",
+      "years": 2
+    },
+    {
+      "name": "Docker",
+      "icon": "docker",
+      "years": 1
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Ingeniería en Informática",
+      "issuer": "Universidad de las Américas",
+      "date": "2023",
+      "link": "",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1Kr9ptAIAkGpg447BOKki7XAZNwKJtGOPNyYMVX7r67s7fAL3UJzQYFQ&s=10"
+    },
+    {
+      "title": "AWS Cloud Practitioner Essentials",
+      "issuer": "AWS ",
+      "date": "2024",
+      "link": "",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHPFkRuptLafod6ZYyD332PZLK3izEsLqCn3X33VjvgQ&s=10"
+    },
+    {
+      "title": "Inglés C2 Proficient",
+      "issuer": " EF SET Certificate 77/100",
+      "date": "2024",
+      "link": "https://cert.efset.org/Li8AnU",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmoFAJreUEEcWUH9fdCDflrKwlaq4WGkOyln_PstHAYE1HoQ7g2f_CCb8p&s=10"
+    },
+    {
+      "title": " Linux Essentials",
+      "issuer": "Cisco Networking Academy",
+      "date": "2023",
+      "link": "",
+      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWp9A40HFEUXmQ0mBcxGsn0YFucx9A7jX7Ko6fIZEZfA&s=10"
+    }
+  ],
   "projects": [
     {
       "name": "Plataforma de Gestión de Prácticas",

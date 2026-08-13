@@ -17,6 +17,18 @@ export const translations = {
       "contact.success":
         "Thank you very much. I will get back to you as soon as possible.",
       "contact.error": "Uh oh, something went wrong. Please try again.",
+      "skills.sub": "Tech Skills",
+      "skills.title": "Years of Experience",
+      "skills.manage": "Manage Technologies",
+      "skills.years": "years",
+      "skills.years.singular": "year",
+      "skills.empty": "No technologies added yet.",
+      "certifications.sub": "Education & Certifications",
+      "certifications.title": "Courses & Achievements.",
+      "certifications.manage": "Manage Certifications",
+      "certifications.view": "View certificate",
+      "certifications.empty":
+        "No certifications, education or courses added yet.",
     },
     months: {
       Enero: "January",
@@ -34,21 +46,21 @@ export const translations = {
     },
     brandTagline: "Developer",
     navLinks: {
-      resumen: "Summary",
+      resumen: "Summary.",
       experiencia: "Experience",
-      proyectos: "Projects",
-      contacto: "Contact",
+      proyectos: "Projects.",
+      contacto: "Contact.",
     },
     hero: {
       greeting: "Hi, I'm",
       subtitle:
-        "I build complete web applications,\nincluding user interfaces, APIs, and databases.",
+        "Software developer with experience in full-stack technologies. I specialize in creating efficient, scalable and user-friendly solutions in real environments.",
     },
     about: {
       sub: "Introduction",
       title: "Summary.",
       description:
-        "I'm a qualified software developer with experience in full-stack technologies. I enjoy collaborating closely with clients and teams to tackle emerging challenges, using best practices and technologies suited to each need. I specialize in creating efficient, scalable, and user-friendly solutions in real-world environments.",
+        "Developer with 3+ years of professional experience building APIs, data pipelines and scalable systems. I am looking for a role where my solutions have a real impact on the product.",
       expSub: "My professional journey so far",
       expTitle: "Work Experience",
     },
@@ -74,13 +86,12 @@ export const translations = {
     },
     experiences: {
       "Núcleo de Investigación de Data Science (NIDS)": {
-        title: "Full-stack Software Developer",
-        date: "January 2023 - March 2023",
         points: [
           "Built an application to request taxpayer data from the SII.",
           "Developed a tax calculation page using JavaScript, HTML and CSS.",
           "Complete project documentation.",
         ],
+        title: "Full-stack Software Developer",
       },
       "FID Chile Seguros Generales S.A.": {
         title: "Data Engineer",
@@ -103,12 +114,10 @@ export const translations = {
     },
     projects: {
       "Plataforma de Gestión de Prácticas": {
-        name: "Internship Management Platform",
         description:
           "Designed and developed a comprehensive web ecosystem for managing the professional internships of the Engineering Faculty at Universidad de las Américas. The platform automates the enrollment flow, file uploads, review and email sending, supporting the operational needs of more than 10,000 students and 500 professors. The architecture consists of a responsive frontend built with React and Tailwind CSS, and a robust REST API in Node.js (Express.js) and PHP connected to a MongoDB database.",
       },
       "EconomyBot - Economía Virtual & Analytics": {
-        name: "EconomyBot - Virtual Economy & Analytics",
         description:
           "I developed a Discord bot focused on gamification, event management and the organic growth of interactions in communities. It features a virtual economy engine optimized with batch operations (bulkWrite) that guarantees data consistency under high-concurrency scenarios. It also implements a real-time tracking system for voice activity, channels and user affinity, generating detailed statistical charts at runtime using a native canvas compiled in Rust (NAPI-RS) along with hot-reloadable programmable crons.",
       },
@@ -155,6 +164,44 @@ export const translations = {
         testimonial:
           "Thanks to Daniel, our e-commerce site is now fast, efficient and easy to use. Sales have increased by 40% since we implemented his improvements.",
         designation: "Sales Manager",
+      },
+    },
+    skills: {
+      JavaScript: {
+        name: "JavaScript",
+      },
+      TypeScript: {
+        name: "TypeScript",
+      },
+      "React JS": {
+        name: "ReactJS",
+      },
+      "Node JS": {
+        name: "NodeJS",
+      },
+      MongoDB: {
+        name: "MongoDB",
+      },
+      Docker: {
+        name: "Docker",
+      },
+    },
+    certifications: {
+      "Ingeniería en Informática": {
+        title: "Computer Engineering",
+        issuer: "University of the Americas",
+      },
+      "AWS Cloud Practitioner Essentials": {
+        title: "AWS Cloud Practitioner Essentials",
+        issuer: "AWS",
+      },
+      "Inglés C2 Proficient": {
+        title: "English C2 Proficient",
+        issuer: "EF SET Certificate 77/100",
+      },
+      " Linux Essentials": {
+        title: "Linux Essentials",
+        issuer: "Cisco Networking Academy",
       },
     },
   },

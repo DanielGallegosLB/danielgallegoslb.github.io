@@ -63,15 +63,6 @@
   ); /* Compatibilidad con navegadores modernos */
 }
 
-.redpower-gradient {
-  background: linear-gradient(
-    -90deg,
-    rgb(0, 0, 0) 11.2%, 
-    rgb(211, 47, 47) 100.3%
-  );
-}
-
-
 .violet-gradient {
   background: #804dee;
   background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);

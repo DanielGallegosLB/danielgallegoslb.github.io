@@ -64,29 +64,57 @@ async function apiTranslate(text) {
 }
 
 // A slot is one translatable string inside a translations.en category.
-// If an English value already exists, it is trusted and preserved (hand
-// written or generated before); only missing values are translated.
+// Strategy:
+//  - English missing                -> translate and store.
+//  - cache[es] === current English  -> in sync, keep.
+//  - cache[es] exists but differs   -> the Spanish source changed after this
+//    English was generated, so refresh the English from the cache.
+//  - no cache entry but current English matches the cached translation of a
+//    DIFFERENT Spanish text -> the Spanish was edited, so re-translate.
+//  - otherwise the English is treated as hand written and preserved.
 async function syncSlot(label, es, get, set) {
   if (es == null || String(es).trim() === "") return;
   const current = get();
-  if (current != null && current !== "") {
-    cache[es] = current;
+
+  const translateAndSet = async () => {
+    let t = cache[es];
+    if (t === undefined) {
+      try {
+        t = await apiTranslate(String(es));
+        cache[es] = t;
+      } catch (err) {
+        stats.failed.push(`${label} (${err.message})`);
+        return;
+      }
+      await sleep(DELAY_MS);
+    }
+    set(t);
+    stats.translated++;
+  };
+
+  if (current == null || current === "") {
+    await translateAndSet();
+    return;
+  }
+
+  if (cache[es] === current) {
     stats.kept++;
     return;
   }
-  let t = cache[es];
-  if (t === undefined) {
-    try {
-      t = await apiTranslate(String(es));
-      cache[es] = t;
-    } catch (err) {
-      stats.failed.push(`${label} (${err.message})`);
-      return;
-    }
-    await sleep(DELAY_MS);
+  if (cache[es] !== undefined) {
+    set(cache[es]);
+    stats.translated++;
+    return;
   }
-  set(t);
-  stats.translated++;
+  const staleSource = Object.keys(cache).find(
+    (k) => k !== es && cache[k] === current
+  );
+  if (staleSource !== undefined) {
+    await translateAndSet();
+    return;
+  }
+  cache[es] = current;
+  stats.kept++;
 }
 
 const objAt = (base, key) => {
@@ -224,6 +252,42 @@ for (const t of data.testimonials || []) {
   );
 }
 
+for (const s of data.skills || []) {
+  const key = s.name;
+  if (!key) continue;
+  const slot = objAt(objAt(en, "skills"), key);
+  addTask(
+    `skills[${key}].name`,
+    s.name,
+    () => slot.name,
+    (v) => {
+      slot.name = v;
+    }
+  );
+}
+
+for (const c of data.certifications || []) {
+  const key = c.title;
+  if (!key) continue;
+  const slot = objAt(objAt(en, "certifications"), key);
+  addTask(
+    `certifications[${key}].title`,
+    c.title,
+    () => slot.title,
+    (v) => {
+      slot.title = v;
+    }
+  );
+  addTask(
+    `certifications[${key}].issuer`,
+    c.issuer,
+    () => slot.issuer,
+    (v) => {
+      slot.issuer = v;
+    }
+  );
+}
+
 for (const t of tasks) await syncSlot(t.label, t.es, t.get, t.set);
 
 const cleanOrphans = (cat, list, keyField) => {
@@ -235,6 +299,8 @@ cleanOrphans("services", data.services, "title");
 cleanOrphans("projects", data.projects, "name");
 cleanOrphans("experiences", data.experiences, "company_name");
 cleanOrphans("testimonials", data.testimonials, "name");
+cleanOrphans("skills", data.skills, "name");
+cleanOrphans("certifications", data.certifications, "title");
 
 const validNav = new Set((data.navLinks || []).map((n) => n.id));
 if (en.navLinks) {
@@ -273,6 +339,8 @@ for (const [cat, list, keyField] of [
   ["experiences", data.experiences, "company_name"],
   ["projects", data.projects, "name"],
   ["testimonials", data.testimonials, "name"],
+  ["skills", data.skills, "name"],
+  ["certifications", data.certifications, "title"],
 ]) {
   if (en[cat]) {
     newEn[cat] = Object.fromEntries(

@@ -4,10 +4,13 @@ import { styles } from "../styles";
 import { ComputersCanvas } from "./canvas";
 
 import { usePortfolio } from "../context/PortfolioContext";
+import { useLanguage } from "../context/LanguageContext";
 import EditableText from "./EditableText";
 
 const Hero = () => {
   const { portfolioData, isAdminMode, updateText } = usePortfolio();
+  const { localizeData } = useLanguage();
+  const data = localizeData(portfolioData, isAdminMode);
 
   return (
     <section className={`relative w-full h-screen mx-auto flex flex-col`}>
@@ -26,13 +29,13 @@ const Hero = () => {
         <div className="w-full">
           <h1 className={`${styles.heroHeadText} text-white flex flex-wrap items-center gap-x-2`}>
             <EditableText
-              value={portfolioData.hero.greeting || "Hola, Soy"}
+              value={data.hero.greeting || "Hola, Soy"}
               onChange={(val) => updateText("hero.greeting", val)}
               isAdminMode={isAdminMode}
               style={{ display: "inline", width: isAdminMode ? "auto" : "auto", minWidth: isAdminMode ? "160px" : "auto" }}
             />
             <EditableText
-              value={portfolioData.hero.name}
+              value={data.hero.name}
               onChange={(val) => updateText("hero.name", val)}
               isAdminMode={isAdminMode}
               className="text-[#915EFF] font-bold"
@@ -41,7 +44,7 @@ const Hero = () => {
           </h1>
           <div className="mt-2 w-full max-w-xl">
             <EditableText
-              value={portfolioData.hero.subtitle}
+              value={data.hero.subtitle}
               onChange={(val) => updateText("hero.subtitle", val)}
               isAdminMode={isAdminMode}
               type="textarea"

@@ -11,8 +11,10 @@ import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 import { usePortfolio } from "../context/PortfolioContext";
+import { useLanguage } from "../context/LanguageContext";
 import { getAsset } from "../utils/assetMapper";
 import EditableText from "./EditableText";
+import SafeImage from "./SafeImage";
 import { ExperienceEditorModal } from "./ModalEditors";
 
 const ExperienceCard = ({ experience }) => {
@@ -27,7 +29,7 @@ const ExperienceCard = ({ experience }) => {
       iconStyle={{ background: experience.iconBg }}
       icon={
         <div className='flex justify-center items-center w-full h-full'>
-          <img
+          <SafeImage
             src={getAsset(experience.icon)}
             alt={experience.company_name}
             className='w-[60%] h-[60%] object-contain'
@@ -61,22 +63,24 @@ const ExperienceCard = ({ experience }) => {
 
 const Experience = () => {
   const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
+  const { localizeData } = useLanguage();
+  const data = localizeData(portfolioData, isAdminMode);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { experiences } = portfolioData;
+  const { experiences } = data;
 
   return (
     <>
       <motion.div variants={textVariant()}>
         <div className="flex flex-col text-center">
           <EditableText
-            value={portfolioData.about.expSub || "Mi recorrido profesional hasta ahora"}
+            value={data.about.expSub || "Mi recorrido profesional hasta ahora"}
             onChange={(val) => updateText("about.expSub", val)}
             isAdminMode={isAdminMode}
             className={styles.sectionSubText}
           />
           <EditableText
-            value={portfolioData.about.expTitle || "Experiencia Laboral"}
+            value={data.about.expTitle || "Experiencia Laboral"}
             onChange={(val) => updateText("about.expTitle", val)}
             isAdminMode={isAdminMode}
             className={styles.sectionHeadText}
@@ -116,4 +120,4 @@ const Experience = () => {
   );
 };
 
-export default SectionWrapper(Experience, "trabajo");
+export default SectionWrapper(Experience, "experiencia");

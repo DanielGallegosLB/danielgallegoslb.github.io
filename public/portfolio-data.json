@@ -7,8 +7,12 @@
       "title": "Resumen"
     },
     {
-      "id": "trabajo",
-      "title": "Trabajo"
+      "id": "experiencia",
+      "title": "Experiencia"
+    },
+    {
+      "id": "proyectos",
+      "title": "Proyectos"
     },
     {
       "id": "contacto",
@@ -49,7 +53,7 @@
     {
       "title": "Full-stack Software Developer",
       "company_name": "Núcleo de Investigación de Data Science (NIDS)",
-      "icon": "/assets/udla-Cw-z3eyY.png",
+      "icon": "udla",
       "iconBg": "#E6DEDD",
       "date": "Enero 2023 - Marzo 2023",
       "points": [
@@ -73,7 +77,7 @@
     {
       "title": "Integration-Delivery Engineer",
       "company_name": "Whale Cloud Technology Co., Ltd",
-      "icon": "/assets/whalecloud-DYYGDD3k.jpg",
+      "icon": "whalecloud",
       "iconBg": "#E6DEDD",
       "date": "Enero 2025 - Diciembre 2025",
       "points": [
@@ -175,7 +179,7 @@
           "color": "pink-text-gradient"
         }
       ],
-      "image": "/assets/ipractica-CERt3c2-.png",
+      "image": "ipractica",
       "source_code_link": "https://github.com/DanielGallegosLB/19-Frontend-source",
       "page_link": "https://19-frontend.vercel.app/"
     },
@@ -247,7 +251,7 @@
           "color": "blue-text-gradient"
         }
       ],
-      "image": "/assets/ecommers-BFeC9N3q.webp"
+      "image": "ecommers"
     },
     {
       "name": "GetDreamJob",
@@ -275,7 +279,7 @@
         }
       ],
       "image": "",
-      "source_code_link": "https://github.com/danielgallegoslb/GetDreamJob](https://www.google.com/search?q=https://github.com/danielgallegoslb/GetDreamJob"
+      "source_code_link": "https://github.com/danielgallegoslb/GetDreamJob"
     },
     {
       "name": "Extractores de Causas Judiciales para Seguros",

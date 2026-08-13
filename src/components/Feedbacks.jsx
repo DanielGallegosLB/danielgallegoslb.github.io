@@ -5,7 +5,9 @@ import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 import { usePortfolio } from "../context/PortfolioContext";
+import { useLanguage } from "../context/LanguageContext";
 import EditableText from "./EditableText";
+import SafeImage from "./SafeImage";
 import { TestimonialEditorModal } from "./ModalEditors";
 
 const FeedbackCard = ({
@@ -35,7 +37,7 @@ const FeedbackCard = ({
           </p>
         </div>
 
-        <img
+        <SafeImage
           src={image}
           alt={`feedback_by-${name}`}
           className='w-10 h-10 rounded-full object-cover'
@@ -47,10 +49,12 @@ const FeedbackCard = ({
 
 const Feedbacks = () => {
   const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
+  const { localizeData } = useLanguage();
+  const data = localizeData(portfolioData, isAdminMode);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const testimonials = portfolioData.testimonials || [];
-  const feedbacksData = portfolioData.feedbacks || {};
+  const testimonials = data.testimonials || [];
+  const feedbacksData = data.feedbacks || {};
 
   return (
     <div className={`mt-12 bg-black-100 rounded-[20px]`}>
@@ -86,7 +90,7 @@ const Feedbacks = () => {
 
       <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7`}>
         {testimonials.map((testimonial, index) => (
-          <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
+          <FeedbackCard key={`feedback-${index}`} index={index} {...testimonial} />
         ))}
       </div>
 

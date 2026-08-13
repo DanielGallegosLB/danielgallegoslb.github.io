@@ -7,10 +7,13 @@ import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 import { usePortfolio } from "../context/PortfolioContext";
+import { useLanguage } from "../context/LanguageContext";
 import EditableText from "./EditableText";
 
 const Contact = () => {
   const { portfolioData, isAdminMode, updateText } = usePortfolio();
+  const { t, localizeData } = useLanguage();
+  const data = localizeData(portfolioData, isAdminMode);
   const formRef = useRef();
   const [form, setForm] = useState({
     name: "",
@@ -50,7 +53,7 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Muchas gracias. Me pondré en contacto contigo lo antes posible.");
+          alert(t("contact.success", "Muchas gracias. Me pondré en contacto contigo lo antes posible."));
 
           setForm({
             name: "",
@@ -62,7 +65,7 @@ const Contact = () => {
           setLoading(false);
           console.error(error);
 
-          alert("Ahh, algo salió mal. Por favor, intenta de nuevo");
+          alert(t("contact.error", "Ahh, algo salió mal. Por favor, intenta de nuevo"));
         }
       );
   };
@@ -77,13 +80,13 @@ const Contact = () => {
       >
         <div className="flex flex-col">
           <EditableText
-            value={portfolioData.contact?.sub || "Ponte en contacto"}
+            value={data.contact?.sub || "Ponte en contacto"}
             onChange={(val) => updateText("contact.sub", val)}
             isAdminMode={isAdminMode}
             className={styles.sectionSubText}
           />
           <EditableText
-            value={portfolioData.contact?.title || "Contacto."}
+            value={data.contact?.title || "Contacto."}
             onChange={(val) => updateText("contact.title", val)}
             isAdminMode={isAdminMode}
             className={styles.sectionHeadText}
@@ -96,35 +99,35 @@ const Contact = () => {
           className='mt-12 flex flex-col gap-8'
         >
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Tu Nombre</span>
+            <span className='text-white font-medium mb-4'>{t("contact.nameLabel", "Tu Nombre")}</span>
             <input
               type='text'
               name='name'
               value={form.name}
               onChange={handleChange}
-              placeholder="¿Cuál es tu nombre?"
+              placeholder={t("contact.namePlaceholder", "¿Cuál es tu nombre?")}
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
           </label>
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Tu correo electrónico</span>
+            <span className='text-white font-medium mb-4'>{t("contact.emailLabel", "Tu correo electrónico")}</span>
             <input
               type='email'
               name='email'
               value={form.email}
               onChange={handleChange}
-              placeholder="¿Cuál es tu dirección web?"
+              placeholder={t("contact.emailPlaceholder", "¿Cuál es tu dirección web?")}
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
           </label>
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Tu Mensaje</span>
+            <span className='text-white font-medium mb-4'>{t("contact.messageLabel", "Tu Mensaje")}</span>
             <textarea
               rows={7}
               name='message'
               value={form.message}
               onChange={handleChange}
-              placeholder='¿Qué quieres decir?'
+              placeholder={t("contact.messagePlaceholder", "¿Qué quieres decir?")}
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
           </label>
@@ -133,7 +136,7 @@ const Contact = () => {
             type='submit'
             className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary'
           >
-            {loading ? "Enviando.." : "Enviar"}
+            {loading ? t("contact.sending", "Enviando..") : t("contact.send", "Enviar")}
           </button>
         </form>
       </motion.div>

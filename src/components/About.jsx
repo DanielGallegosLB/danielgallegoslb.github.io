@@ -3,12 +3,14 @@ import { Tilt } from 'react-tilt';
 import { motion } from "framer-motion";
 
 import { usePortfolio } from "../context/PortfolioContext";
+import { useLanguage } from "../context/LanguageContext";
 import { getAsset } from "../utils/assetMapper";
 import EditableText from "./EditableText";
 import { ServiceEditorModal } from "./ModalEditors";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
+import SafeImage from "./SafeImage";
 
 const ServiceCard = ({ index, title, icon }) => (
   <Tilt className='xs:w-[250px] w-full'>
@@ -24,7 +26,7 @@ const ServiceCard = ({ index, title, icon }) => (
         }}
         className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col'
       >
-        <img
+        <SafeImage
           src={getAsset(icon)}
           alt={title}
           className='w-16 h-16 object-contain'
@@ -40,6 +42,8 @@ const ServiceCard = ({ index, title, icon }) => (
 
 const About = () => {
   const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
+  const { localizeData } = useLanguage();
+  const data = localizeData(portfolioData, isAdminMode);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
 
   return (
@@ -47,13 +51,13 @@ const About = () => {
       <motion.div variants={textVariant()}>
         <div className="flex flex-col">
           <EditableText
-            value={portfolioData.about.sub}
+            value={data.about.sub}
             onChange={(val) => updateText("about.sub", val)}
             isAdminMode={isAdminMode}
             className={styles.sectionSubText}
           />
           <EditableText
-            value={portfolioData.about.title}
+            value={data.about.title}
             onChange={(val) => updateText("about.title", val)}
             isAdminMode={isAdminMode}
             className={styles.sectionHeadText}
@@ -63,7 +67,7 @@ const About = () => {
 
       <div className="mt-4 max-w-3xl">
         <EditableText
-          value={portfolioData.about.description}
+          value={data.about.description}
           onChange={(val) => updateText("about.description", val)}
           isAdminMode={isAdminMode}
           type="textarea"
@@ -83,15 +87,15 @@ const About = () => {
       )}
 
       <div className='mt-20 flex flex-wrap gap-10'>
-        {portfolioData.services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
+        {data.services.map((service, index) => (
+          <ServiceCard key={`service-${index}`} index={index} {...service} />
         ))}
       </div>
 
       <ServiceEditorModal
         isOpen={isServiceModalOpen}
         onClose={() => setIsServiceModalOpen(false)}
-        data={portfolioData.services || []}
+        data={data.services || []}
         onSave={(updated) => updateField("services", updated)}
       />
     </>

@@ -12,7 +12,8 @@ export const PortfolioProvider = ({ children }) => {
     brandTagline: "Desarrollador",
     navLinks: [
       { id: "resumen", title: "Resumen" },
-      { id: "trabajo", title: "Trabajo" },
+      { id: "experiencia", title: "Experiencia" },
+      { id: "proyectos", title: "Proyectos" },
       { id: "contacto", title: "Contacto" },
     ],
     hero: {

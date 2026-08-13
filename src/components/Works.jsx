@@ -8,7 +8,9 @@ import { getAsset } from "../utils/assetMapper";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 import { usePortfolio } from "../context/PortfolioContext";
+import { useLanguage } from "../context/LanguageContext";
 import EditableText from "./EditableText";
+import SafeImage from "./SafeImage";
 import { ProjectEditorModal } from "./ModalEditors";
 
 const ProjectCard = ({
@@ -27,7 +29,7 @@ const ProjectCard = ({
         className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
       >
         <div className='relative w-full h-[230px]'>
-          <img
+          <SafeImage
             src={getAsset(image)}
             alt='project_image'
             className='w-full h-full object-cover rounded-2xl'
@@ -75,10 +77,12 @@ const ProjectCard = ({
 
 const Works = () => {
   const { portfolioData, isAdminMode, updateText, updateField } = usePortfolio();
+  const { localizeData } = useLanguage();
+  const data = localizeData(portfolioData, isAdminMode);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const projects = portfolioData.projects || [];
-  const worksData = portfolioData.works || {};
+  const projects = data.projects || [];
+  const worksData = data.works || {};
 
   return (
     <>
@@ -141,4 +145,4 @@ const Works = () => {
   );
 };
 
-export default SectionWrapper(Works, "");
+export default SectionWrapper(Works, "proyectos");

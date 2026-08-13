@@ -8,6 +8,7 @@ import link from "./link.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
 import logo2 from "./iconwhite.png";
+import placeholder from "./placeholder.svg";
 
 import css from "./tech/css.png";
 import docker from "./tech/docker.png";
@@ -74,5 +75,6 @@ export {
   ipractica,
   ecommerce,
   krapygames,
-  whalecloud
+  whalecloud,
+  placeholder
 };
